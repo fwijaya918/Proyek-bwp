@@ -1,0 +1,32 @@
+.btnnav {
+    text-decoration: none;
+    color: black;
+}
+
+.formLogin {
+
+    width: 700px;
+    height: 400px;
+    background-color: white;
+    margin-top: 200px;
+    margin-left: 600px;
+    padding: 20px;
+}
+
+.inputan {
+    padding: 10px;
+    margin-top: 30px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 10px;
+    background-color: gainsboro;
+}
+
+#btnlogin {
+    width: 620px;
+    margin-left: 20px;
+}
+
+body {
+    background-color: gray;
+}
