@@ -42,6 +42,10 @@ $awalData = ($jumlahDataPerHalaman*$halamanAktif)-$jumlahDataPerHalaman;
 
     <title>Somethinc</title>
     <style>
+        a{
+            color:white;
+            text-decoration:none;
+        }
     </style>
 </head>
 
