@@ -1,28 +1,37 @@
 <?php
-require ("helper.php") ;
+require("helper.php");
+if (isset($_POST["logout"])) {
+    unset($_SESSION["username"]);
+    unset($_SESSION["fullname"]);
+    header("location:catalogue.php");
+}
 if (!isset($_SESSION['username'])) {
-    header('Location: ./index.php');
-}else {
+    // header('Location: ./index.php');
+} else {
     $fullnameActive = $_SESSION['fullname'];
     $usernameActive = $_SESSION['username'];
-
 }
 
 //pagination
 //konfigurasi
 //ngitung halaman
-$jumlahDataPerHalaman = 20;
-$result = mysqli_query($con, "SELECT * FROM product");
-$jumlahData=mysqli_num_rows($result);
+$jumlahDataPerHalaman = 12;
+if (isset($_GET["performsearch"])) {
+    $query = mysqli_real_escape_string($con, htmlspecialchars($_GET["query"]));
+    $result = mysqli_query($con, "SELECT * FROM `product` WHERE `title` LIKE '%$query%';");
+} else {
+    $result = mysqli_query($con, "SELECT * FROM `product`;");
+}
+$jumlahData = mysqli_num_rows($result);
 //pembulatan halaman
-$jumlahHalaman=ceil($jumlahData/$jumlahDataPerHalaman);
+$jumlahHalaman = ceil($jumlahData / $jumlahDataPerHalaman);
 //ngecekin halaman aktif yang keberapa
-if(isset($_GET["halaman"])){
+if (isset($_GET["halaman"])) {
     $halamanAktif = $_GET["halaman"];
 } else {
-    $halamanAktif=1;
+    $halamanAktif = 1;
 }
-$awalData = ($jumlahDataPerHalaman*$halamanAktif)-$jumlahDataPerHalaman;
+$awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
 
 
 
@@ -42,84 +51,222 @@ $awalData = ($jumlahDataPerHalaman*$halamanAktif)-$jumlahDataPerHalaman;
 
     <title>Somethinc</title>
     <style>
-        a{
-            color:white;
-            text-decoration:none;
+        a {
+            /* color: white; */
+            text-decoration: none;
         }
     </style>
 </head>
 
 <body class="bg-dark">
+    <nav class="navbar bg-white">
+        <div class="container" style="">
+            <a class="navbar-brand" href="">
+                <img src="logo/Somethinc_Logo.png" width="150">
+            </a>
+            <div class="d-flex" role="search">
+                <?php
+                if (!isset($_SESSION["username"])) :
+                ?>
+                    <div class="fw-bold mx-5 text-dark login-register"><a href="login.php" class="btn text-decoration-none">Login</a></div>
+                <?php else : ?>
+                    <form method="POST" action="" class="fw-bold mx-5 text-dark login-register"><button class="btn" type="submit" name="logout" class="btnnav">Logout</button></form>
+                <?php endif; ?>
+            </div>
+        </div>
+    </nav>
     <div class="container-fluid p-5">
-        <h1 style="color:white;">Selamat datang <?= $fullnameActive?>, mau belanja apa hari ini?</h1>
+
         <form action="" method="get">
-            <input type="text" name="query" class="mb-5" placeholder="Search:" id="">
+            <input type="text" name="query" class="mb-5" placeholder="Search:" value="<?php if (isset($_GET["query"])) {
+                                                                                            echo $_GET["query"];
+                                                                                        } ?>" id="">
             <button type="submit" class="rounded btn-primary" name="performsearch">Search</button>
         </form>
-        <h5 style="color:white;">Halaman</h5>
-        <?php 
-            if($halamanAktif==1){?>
+        <div class="row">
+            <div class="col-2">
+                <div class="w100 rounded bg-white p-2">
+                    <!-- <h3 class="">Filter:</h3> -->
+                    <h5>Category:</h5>
+                    <?php
+                    $res = mysqli_query($con, "SELECT * FROM category;");
+                    while ($row = mysqli_fetch_assoc($res)) :
+                    ?>
+                        <a class="<?php if (isset($_GET["category"])) {
+                                        if ($_GET["category"] == $row["id_category"]) {
+                                            echo "fw-bold";
+                                        }
+                                    } ?>" href="catalogue.php?<?php if (isset($_GET["query"])) {
+                                                                    $tempq = $_GET["query"];
+                                                                    echo "?query=$tempq&amp;performsearch=";
+                                                                } ?>&amp;category=<?php echo $row["id_category"] ?>"><?= $row["nama_category"] ?></a>
+                        <br>
+                    <?php endwhile; ?>
+                    <br>
+                    <a href="catalogue.php"><button class="btn btn-primary">Reset Filter</button></a>
+                </div>
+            </div>
+            <div class="col-10">
+                <h5 style="color:white;">Halaman</h5>
+                <nav>
+                    <ul class="pagination">
+                        <li class="page-item">
+                            <?php
+                            if ($halamanAktif == 1) { ?>
+                            <?php
+                            } else { ?>
+                                <a class="page-link" href="catalogue.php<?php if (isset($_GET["query"])) {
+                                                                            $tempq = $_GET["query"];
+                                                                            echo "?query=$tempq&amp;performsearch=";
+                                                                        } ?>">
+                                    << </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?halaman=<?= $halamanAktif - 1 ?><?php if (isset($_GET["query"])) {
+                                                                                            $tempq = $_GET["query"];
+                                                                                            echo "&amp;query=$tempq&amp;performsearch=";
+                                                                                        } ?>">&lt;</a>
+                        </li>
+                    <?php
+                            }
+                    ?>
+                    </li>
+                    <?php for ($i = 1; $i <= $jumlahHalaman; $i++) : ?>
+                        <?php if ($i == $halamanAktif) : ?>
+                            <li class="page-item active">
+                                <b><a class="page-link" href="?halaman=<?= $i; ?><?php if (isset($_GET["query"])) {
+                                                                                        $tempq = $_GET["query"];
+                                                                                        echo "&amp;query=$tempq&amp;performsearch=";
+                                                                                    } ?>"><?= $i ?></a></b>
+                            </li>
+                        <?php else : ?>
+                            <li class="page-item">
 
-            <?php
-            } else {?>
-            <a href="catalogue.php"><<</a>
-            <a href="?halaman=<?= $halamanAktif-1?>">&lt;</a>
-            <?php
-            }
-            
-        ?>
-        
-        <?php for($i=1; $i<=$jumlahHalaman; $i++):?>
-            <?php if($i== $halamanAktif) : ?>
-                <b><i><a href="?halaman=<?= $i;?>" style="color:yellow;"><?= $i?></a></i></b>
-            <?php else : ?>
-                <a href="?halaman=<?= $i;?>"><?= $i?></a>
-            <?php endif ; ?>
-        <?php endfor;?>
-        <?php
-        if($halamanAktif<$jumlahHalaman){?>
-            <a href="?halaman=<?= $halamanAktif+1?>">&gt;</a>
-            <a href="?halaman=<?= $jumlahHalaman?>">>></a>
-            <?php
-            } else {?>
-            
-            <?php
-            }
-        ?>
-        <div class="row row-cols-4 gy-3">
-            <?php
-            //pagination intinya limit startingIdx, sampai berapa
-            if (isset($_GET["performsearch"])) {
-                $query = mysqli_real_escape_string($con, htmlspecialchars($_GET["query"]));
-                $products = mysqli_query($con, "SELECT * FROM `product` WHERE `title` LIKE '%$query%' LIMIT $awalData, $jumlahDataPerHalaman;");
-            } else {
-                $products = mysqli_query($con, "SELECT * FROM `product` LIMIT $awalData, $jumlahDataPerHalaman ;");
-            }
-            while ($row = mysqli_fetch_assoc($products)) {
-                echo '<div class="col">';
-                // $link = $row["link"];
-                // echo '<a href="' . $link . '" class="text-decoration-none text-dark">';
-                echo '<div class="card p-2 mb-5 h-100">';
-                echo '<img src="product/' . $row["thumbnail"] . '" class="card-img-top border border-2 border-dark rounded" alt="' . $row["title"] . '">';
-                echo '<div class="card-body text-center">';
-                echo '<h5 class="card-title fixheight mb-3">';
-                echo $row["title"];
-                echo '</h5>';
-                echo '<p class="card-text">';
-                echo $row["price"];
-                echo '</p>';
-                echo "</div>";
-                echo "</div>";
-                echo '</a>';
-                echo "</div>";
-                flush();
-                ob_flush();
-            }
-            ?>
-            <!-- navigasi -->
-            
+                                <a class="page-link" href="?halaman=<?= $i; ?><?php if (isset($_GET["query"])) {
+                                                                                    $tempq = $_GET["query"];
+                                                                                    echo "&amp;query=$tempq&amp;performsearch=";
+                                                                                } ?>"><?= $i ?></a>
+                            </li>
+                        <?php endif; ?>
+                    <?php endfor; ?>
+                    <?php
+                    if ($halamanAktif < $jumlahHalaman) { ?>
+                        <li class="page-item">
+                            <a class="page-link" href="?halaman=<?= $halamanAktif + 1 ?><?php if (isset($_GET["query"])) {
+                                                                                            $tempq = $_GET["query"];
+                                                                                            echo "&amp;query=$tempq&amp;performsearch=";
+                                                                                        } ?>">&gt;</a>
+                        </li>
+                        <li class="page-item">
+
+                            <a class="page-link" href="?halaman=<?= $jumlahHalaman ?><?php if (isset($_GET["query"])) {
+                                                                                            $tempq = $_GET["query"];
+                                                                                            echo "&amp;query=$tempq&amp;performsearch=";
+                                                                                        } ?>">>></a>
+                        </li>
+                    <?php
+                    } ?>
+                    </ul>
+
+                </nav>
+                <div class="row row-cols-4 gy-3">
+                    <?php
+                    //pagination intinya limit startingIdx, sampai berapa
+                    if (isset($_GET["performsearch"])) {
+                        $query = mysqli_real_escape_string($con, htmlspecialchars($_GET["query"]));
+                        $products = mysqli_query($con, "SELECT * FROM `product` WHERE `title` LIKE '%$query%' LIMIT $awalData, $jumlahDataPerHalaman;");
+                    } else {
+                        $products = mysqli_query($con, "SELECT * FROM `product` LIMIT $awalData, $jumlahDataPerHalaman ;");
+                    }
+                    while ($row = mysqli_fetch_assoc($products)) {
+                        echo '<div class="col">';
+                        echo '<a href="detail.php?productid=1" class="text-decoration-none text-dark">';
+                        echo '<div class="card p-2 mb-5 h-100">';
+                        echo '<img src="product/' . $row["thumbnail"] . '" class="card-img-top border border-2 border-dark rounded" alt="' . $row["title"] . '">';
+                        echo '<div class="card-body text-center">';
+                        echo '<h5 class="card-title fixheight mb-3">';
+                        echo $row["title"];
+                        echo '</h5>';
+                        echo '<p class="card-text">';
+                        echo $row["price"];
+                        echo '</p>';
+                        echo "</div>";
+                        echo "</div>";
+                        // echo '</a>';
+                        echo "</div>";
+                        flush();
+                        ob_flush();
+                    }
+                    ?>
+                    <!-- navigasi -->
+
+                </div>
+                <br>
+                <nav>
+                    <ul class="pagination">
+                        <li class="page-item">
+                            <?php
+                            if ($halamanAktif == 1) { ?>
+                            <?php
+                            } else { ?>
+                                <a class="page-link" href="catalogue.php<?php if (isset($_GET["query"])) {
+                                                                            $tempq = $_GET["query"];
+                                                                            echo "?query=$tempq&amp;performsearch=";
+                                                                        } ?>">
+                                    << </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?halaman=<?= $halamanAktif - 1 ?><?php if (isset($_GET["query"])) {
+                                                                                            $tempq = $_GET["query"];
+                                                                                            echo "&amp;query=$tempq&amp;performsearch=";
+                                                                                        } ?>">&lt;</a>
+                        </li>
+                    <?php
+                            }
+                    ?>
+                    </li>
+                    <?php for ($i = 1; $i <= $jumlahHalaman; $i++) : ?>
+                        <?php if ($i == $halamanAktif) : ?>
+                            <li class="page-item active">
+                                <b><i><a class="page-link" href="?halaman=<?= $i; ?><?php if (isset($_GET["query"])) {
+                                                                                        $tempq = $_GET["query"];
+                                                                                        echo "&amp;query=$tempq&amp;performsearch=";
+                                                                                    } ?>"><?= $i ?></a></i></b>
+                            </li>
+                        <?php else : ?>
+                            <li class="page-item">
+
+                                <a class="page-link" href="?halaman=<?= $i; ?><?php if (isset($_GET["query"])) {
+                                                                                    $tempq = $_GET["query"];
+                                                                                    echo "&amp;query=$tempq&amp;performsearch=";
+                                                                                } ?>"><?= $i ?></a>
+                            </li>
+                        <?php endif; ?>
+                    <?php endfor; ?>
+                    <?php
+                    if ($halamanAktif < $jumlahHalaman) { ?>
+                        <li class="page-item">
+                            <a class="page-link" href="?halaman=<?= $halamanAktif + 1 ?><?php if (isset($_GET["query"])) {
+                                                                                            $tempq = $_GET["query"];
+                                                                                            echo "&amp;query=$tempq&amp;performsearch=";
+                                                                                        } ?>">&gt;</a>
+                        </li>
+                        <li class="page-item">
+
+                            <a class="page-link" href="?halaman=<?= $jumlahHalaman ?><?php if (isset($_GET["query"])) {
+                                                                                            $tempq = $_GET["query"];
+                                                                                            echo "&amp;query=$tempq&amp;performsearch=";
+                                                                                        } ?>">>></a>
+                        </li>
+                    <?php
+                    } ?>
+                    </ul>
+
+                </nav>
+            </div>
+
         </div>
-        
+
     </div>
 
     <!-- Optional JavaScript; choose one of the two! -->
