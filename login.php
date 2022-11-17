@@ -54,13 +54,13 @@ if (isset($_REQUEST['btnlogin'])) {
 
 <body>
     <nav class="navbar bg-white">
-        <div class="container">
+        <div class="container-fluid">
             <a class="navbar-brand" href="catalogue.php">
                 <img src="logo/Somethinc_Logo.png" width="150">
             </a>
             <div class="d-flex" role="search">
-                <div class="fw-bold mx-5 login-register"><a href="index.php" class="btnnav">Login</a></div>
-                <div class="fw-bold mx-5 login-register"><a href="register.php" class="btnnav">Register</a></div>
+                <div class="fw-bold mx-5 login-register"><a href="login.php" class="btnnav text-decoration-none text-black">Login</a></div>
+                <div class="fw-bold mx-5 login-register"><a href="register.php" class="btnnav text-decoration-none text-black">Register</a></div>
             </div>
         </div>
     </nav>

@@ -54,7 +54,7 @@ if (isset($_REQUEST['btnRegis'])) {
 <body>
     <nav class="navbar bg-white">
         <div class="container">
-            <a class="navbar-brand" href="catalogue.php">
+            <a class="navbar-brand" href="catalogue.phpimage.png">
                 <img src="logo/Somethinc_Logo.png" width="150">
             </a>
             <div class="d-flex" role="search">

@@ -1,0 +1,45 @@
+.thumbnail img {
+    width: 800px;
+    height: 500px;
+}
+
+.kiri {
+
+    width: fit-content;
+
+}
+
+.kanan {
+    background-color: red;
+    padding-top: 30px;
+    padding-left: 50px;
+    width: 1000px;
+    margin-left: 50px;
+    border-radius: 50px;
+}
+
+.kanan img {
+    width: 100px;
+}
+
+.isi {
+    padding-left: 10%;
+    padding-right: 10%;
+    margin-top: 50px;
+    display: flex;
+    margin-bottom: 50px;
+}
+
+.description {
+    color: white;
+
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+.containerdesc {
+    color: black;
+    background-color: greenyellow;
+    padding: 20px;
+    border-radius: 20px;
+}

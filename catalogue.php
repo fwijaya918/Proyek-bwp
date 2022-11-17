@@ -1,5 +1,10 @@
 <?php
 require("helper.php");
+if (isset($_SESSION["redirect"])) {
+    $redirectlink = $_SESSION["redirect"];
+    unset($_SESSION["redirect"]);
+    header("location:$redirectlink");
+}
 if (isset($_POST["logout"])) {
     unset($_SESSION["username"]);
     unset($_SESSION["fullname"]);
@@ -16,12 +21,26 @@ if (!isset($_SESSION['username'])) {
 //konfigurasi
 //ngitung halaman
 $jumlahDataPerHalaman = 12;
+$filters = [];
+if (isset($_GET["category"])) {
+    $idCat = $_GET["category"];
+    $filters[] = "`product_category_id`='$idCat'";
+    // $query = mysqli_real_escape_string($con, htmlspecialchars($_GET["query"]));
+    // $result = mysqli_query($con, "SELECT * FROM `product` WHERE `title` LIKE '%$query%' AND `product_category_id`='$idCat';");
+}
 if (isset($_GET["performsearch"])) {
     $query = mysqli_real_escape_string($con, htmlspecialchars($_GET["query"]));
-    $result = mysqli_query($con, "SELECT * FROM `product` WHERE `title` LIKE '%$query%';");
-} else {
-    $result = mysqli_query($con, "SELECT * FROM `product`;");
+    // $result = mysqli_query($con, "SELECT * FROM `product` WHERE `title` LIKE '%$query%';");
+    $filters[] = "`title` LIKE '%$query%'";
 }
+$wheres = implode(" AND ", $filters);
+$generatedWHERE = "";
+if ($wheres != "") {
+    $generatedWHERE .= "WHERE " . $wheres;
+}
+$base = "SELECT * FROM `product` $generatedWHERE";
+$result = mysqli_query($con, "$base;");
+
 $jumlahData = mysqli_num_rows($result);
 //pembulatan halaman
 $jumlahHalaman = ceil($jumlahData / $jumlahDataPerHalaman);
@@ -47,6 +66,7 @@ $awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <title>Somethinc</title>
@@ -65,6 +85,7 @@ $awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
                 <img src="logo/Somethinc_Logo.png" width="150">
             </a>
             <div class="d-flex" role="search">
+                <div class="mx-3 mt-2"><a href="cart.php"><img src="logo/shopping_cart_FILL0_wght400_GRAD0_opsz48.png" height="25px" alt=""></a></div>
                 <?php
                 if (!isset($_SESSION["username"])) :
                 ?>
@@ -172,15 +193,11 @@ $awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
                 <div class="row row-cols-4 gy-3">
                     <?php
                     //pagination intinya limit startingIdx, sampai berapa
-                    if (isset($_GET["performsearch"])) {
-                        $query = mysqli_real_escape_string($con, htmlspecialchars($_GET["query"]));
-                        $products = mysqli_query($con, "SELECT * FROM `product` WHERE `title` LIKE '%$query%' LIMIT $awalData, $jumlahDataPerHalaman;");
-                    } else {
-                        $products = mysqli_query($con, "SELECT * FROM `product` LIMIT $awalData, $jumlahDataPerHalaman ;");
-                    }
+                    $products = mysqli_query($con, "$base LIMIT $awalData, $jumlahDataPerHalaman;");
+
                     while ($row = mysqli_fetch_assoc($products)) {
                         echo '<div class="col">';
-                        echo '<a href="detail.php?productid=1" class="text-decoration-none text-dark">';
+                        echo '<a href="detail.php?productid= ' . $row['id'] . '" class="text-decoration-none text-dark">';
                         echo '<div class="card p-2 mb-5 h-100">';
                         echo '<img src="product/' . $row["thumbnail"] . '" class="card-img-top border border-2 border-dark rounded" alt="' . $row["title"] . '">';
                         echo '<div class="card-body text-center">';
