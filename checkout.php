@@ -1,6 +1,12 @@
 <?php
-
-
+require("helper.php");
+if (isset($_POST["logout"])) {
+    unset($_SESSION["username"]);
+    unset($_SESSION["fullname"]);
+}
+if (!isset($_SESSION["username"])) {
+    header("location:login.php");
+}
 ?>
 
 
@@ -34,18 +40,11 @@
             </div>
         </div>
     </nav>
-    <div class="judul">
-        <div class="container">
-            <div class="header">
-
-            </div>
-            <div class="content">
-                
-            </div>
-            <div class="angka">
-                
-            </div>
-        </div>
+    <div class="text-center">
+        <h1>TERIMA KASIH</h1>
+        <h2>N20312930129301</h2>
+        <div class="lead">Contact Us</div>
+        <div class="lead">+6288-885151</div>
     </div>
 
 

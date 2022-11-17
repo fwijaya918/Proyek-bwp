@@ -80,30 +80,22 @@ $result = mysqli_query($con, "SELECT * FROM `cart` WHERE `id_user`= '$iduser';")
         </div>
     </nav>
     <div class="isi">
-        <div class="kiri">
-            <h1 style="color:white;">Keranjang <?= $usernameActive ?></h1>
-            <br>
-            <div class="thumbnail" id="thumbnail">
+        <?php
+        if (mysqli_num_rows($result) > 0) :
+        ?>
+            <div class="kiri">
+                <h1 style="color:white;">Keranjang <?= $usernameActive ?></h1>
+                <br>
+                <div class="thumbnail" id="thumbnail">
+
+                </div>
+            </div>
+            <div class="kanan" id="kanan" style="color:white;">
 
             </div>
-        </div>
-        <div class=" kanan" id="kanan"style="color:white;">
-            <form action="" method="post">
-                <h3>Rincian Keranjang</h3> <br>
-                <h5>Banyak barang dibeli</h5>
-                <div id="containerQty">
-
-                </div>
-                <h5>Subtotal</h5>
-                <div id="containerSubTotal">
-
-                </div>
-                <h5>Ongkir</h5>
-                <p>Rp 19000</p>
-                <a href="./checkout.php"><button>Check Out</button></a>
-            </form>
-
-        </div>
+        <?php else :  ?>
+            <h1 class="text-white">YOUR CART IS EMPTY</h1>
+        <?php endif;  ?>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
@@ -125,12 +117,12 @@ $result = mysqli_query($con, "SELECT * FROM `cart` WHERE `id_user`= '$iduser';")
         if (method.toLowerCase() == "post") r.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         r.send(data);
     }
-    
+
     function refresh_table(xhttp) {
         if ((xhttp.readyState == 4) && (xhttp.status == 200)) {
             // console.log(xhttp.responseText);
             fetch_cart();
-            fetch_qty();
+            fetch_kanan();
         }
     }
 
@@ -149,6 +141,7 @@ $result = mysqli_query($con, "SELECT * FROM `cart` WHERE `id_user`= '$iduser';")
     function drop(obj) {
         update_title = obj.value;
         ajax_func('GET', `drop.php?update_title=${update_title}`, refresh_table);
+        location.reload();
     }
 
     function fetch_cart() {
@@ -161,6 +154,7 @@ $result = mysqli_query($con, "SELECT * FROM `cart` WHERE `id_user`= '$iduser';")
         r.open('GET', 'cart_fetch.php');
         r.send();
     }
+
     function fetch_kanan() {
         r = new XMLHttpRequest();
         r.onreadystatechange = function() {
