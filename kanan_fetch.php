@@ -20,9 +20,11 @@ $resultQty = mysqli_query($con, "SELECT SUM(cart.qty) AS QTY
 $rowQty = mysqli_fetch_assoc($resultQty);
 $rowUang = mysqli_fetch_assoc($resultUang);
 $TOTAL = $rowUang["Total"];
+$subtotal = $rowUang["Total"];
+// var_dump($snapToken);
 $ALLQTY = $rowQty["QTY"];
 ?>
-<form action="checkout.php" method="post">
+<div action="" method="">
     <h3>Rincian Keranjang</h3> <br>
     <h5>Banyak barang dibeli</h5>
     <div id="containerQty">
@@ -34,5 +36,6 @@ $ALLQTY = $rowQty["QTY"];
     </div>
     <h5>Ongkir</h5>
     <p>Rp 19000</p>
-    <button type="submit">Check Out</button>
-</form>
+
+    <button type="submit" onclick="cekout()">Check Out</button>
+</div>

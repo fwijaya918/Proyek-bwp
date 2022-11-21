@@ -41,6 +41,7 @@ while ($row = mysqli_fetch_assoc($result)) { ?>
             <p><?= $tempHargaBarang ?></p>
             <h5>Banyak yang dibeli</h5>
             <p><?= $row['qty'] ?></p>
+
             <button name="kurangBtn" onclick="kurang(this)" value="<?= $row['id_cart'] ?>">-</button>
             <button name="tambahBtn" onclick="tambah(this)" value="<?= $row['id_cart'] ?>">+</button>
             <button name="dropBtn" onclick="drop(this)" value="<?= $row['id_cart'] ?>">Delete </button>

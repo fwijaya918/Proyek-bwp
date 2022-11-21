@@ -53,7 +53,7 @@ if (isset($_REQUEST['btnRegis'])) {
 
 <body>
     <nav class="navbar bg-white">
-        <div class="container">
+        <div class="container-fluid">
             <a class="navbar-brand" href="catalogue.phpimage.png">
                 <img src="logo/Somethinc_Logo.png" width="150">
             </a>
@@ -63,26 +63,31 @@ if (isset($_REQUEST['btnRegis'])) {
             </div>
         </div>
     </nav>
-    <div class="formRegis">
-        <h1>Register</h1>
-        <form action="./register.php" method="post" style="">
-            <div class="inputan">
-                <input type="text" name="inUser" placeholder="username" style="background:transparent; border:none; color:black;"><br>
-            </div>
-            <div class="inputan">
-                <input type="text" name="inFullname" placeholder="full name" style="background:transparent; border:none; color:black;"><br>
-            </div>
+    <div class="container-fluid">
+        <div class="border border-secondary border-3 g-3 bg-white rounded w-50 p-4 mx-auto mt-5">
+            <h3 class="text-center mb-4">Sign Up</h3>
+            <form action="./register.php" method="post" style="">
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" name="inUser" id="floatingInput" placeholder="name@example.com">
+                    <label for="floatingInput">Username</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" name="inFullname" id="floatingInput" placeholder="name@example.com">
+                    <label for="floatingInput">Full name</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="password" class="form-control" name="inPass" id="floatingInput" placeholder="name@example.com">
+                    <label for="floatingInput">Password</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="password" class="form-control" name="conPass" id="floatingInput" placeholder="name@example.com">
+                    <label for="floatingInput">Confirm Password</label>
+                </div>
+                <button type="submit" name="btnRegis" id="" class="btn btn-primary w-100">Register</button>
 
-            <div class="inputan">
-                <input type="text" name="inPass" placeholder="password" style="background:transparent; border:none; color:black;"><br>
-            </div>
-            <div class="inputan">
-                <input type="text" name="conPass" placeholder="confirmation password" style="background:transparent; border:none; color:black;"><br>
-            </div>
-            <button type="submit" name="btnRegis" id="btnRegis" style="margin-top:50px; background-color: pink;">Register</button>
-
-        </form>
-        <p style=" text-align:center; ">Have an Account? <a href="./index.php" style="">Login</a></p>
+            </form>
+            <p style=" text-align:center;" class="mt-4">Already have an Account? <a href="./index.php" style="">Sign In</a></p>
+        </div>
     </div>
 
 

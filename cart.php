@@ -46,6 +46,58 @@ $result = mysqli_query($con, "SELECT * FROM `cart` WHERE `id_user`= '$iduser';")
 //     $qty = $_REQUEST['qty'];
 //     mysqli_query($con, "insert into cart values('','" . $idUser . "', '" . $selectedItem . "','" . $qty . "')");
 // }
+require_once('Veritrans.php');
+
+//Set Your server key
+Veritrans_Config::$serverKey = "SB-Mid-server-MMmoT6SLju9dDUEjhC-MfElB";
+
+// Uncomment for production environment
+// Veritrans_Config::$isProduction = true;
+
+// Enable sanitization
+Veritrans_Config::$isSanitized = true;
+
+// Enable 3D-Secure
+Veritrans_Config::$is3ds = true;
+
+function updateSubtotal($con, $usernameActive)
+{
+    $ambilUser = mysqli_query($con, "SELECT * FROM `users` WHERE `username`= '$usernameActive';");
+    $fetchUser = mysqli_fetch_assoc($ambilUser);
+    $iduser = $fetchUser['id'];
+    $resultUang = mysqli_query($con, "SELECT SUM(product.price*cart.qty) as 'Total'
+    FROM `cart` 
+    LEFT JOIN `product` ON `cart`.`id_barang` = `product`.`id`
+    WHERE cart.id_user='$iduser';");
+    $resultQty = mysqli_query($con, "SELECT SUM(cart.qty) AS QTY
+    FROM `cart` 
+    WHERE cart.id_user='$iduser';");
+    $rowQty = mysqli_fetch_assoc($resultQty);
+    $rowUang = mysqli_fetch_assoc($resultUang);
+    $TOTAL = $rowUang["Total"];
+    $subtotal = $rowUang["Total"];
+
+    // Required
+    $transaction_details = array(
+        'order_id' => rand(),
+        'gross_amount' => $subtotal, // no decimal allowed for creditcard
+    );
+
+
+    // Optional, remove this to display all available payment methods
+    // $enable_payments = array('credit_card','cimb_clicks','mandiri_clickpay','echannel');
+    // $enable_payments = array(); 
+
+    // Fill transaction details
+    $transaction = array(
+        'transaction_details' => $transaction_details,
+        // 'enabled_payments' => $enable_payments,
+    );
+
+    $snapToken = Veritrans_Snap::getSnapToken($transaction);
+    return $snapToken;
+}
+$snapToken = updateSubtotal($con, $usernameActive);
 ?>
 
 <!DOCTYPE html>
@@ -164,7 +216,43 @@ $result = mysqli_query($con, "SELECT * FROM `cart` WHERE `id_user`= '$iduser';")
         }
         r.open('GET', 'kanan_fetch.php');
         r.send();
+        // <?php $snapToken = updateSubtotal($con, $usernameActive); ?>
+
     }
+</script>
+<script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="SB-Mid-client-Dogh6FNj-DzvrdQk"></script>
+<script type="text/javascript">
+    function cekout() {
+        // SnapToken acquired from previous step
+        snap.pay('<?= $snapToken ?>', {
+            // Optional
+            onSuccess: function(result) {
+                console.log("success bayar ");
+                alert('success bayar midtrans');
+                // document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+                document.getElementById('result-json').innerHTML = "masuk sukses";
+                /* You may add your own js here, this is just example */
+                // $.post("ajax.php",
+                //   { jenis: 'midtranspayment' },
+                //   function(result) {
+                //     alert(result); 
+                //     window.location = "thanks.php"; 
+                //   }
+                // );
+            },
+            // Optional
+            onPending: function(result) {
+                document.getElementById('result-json').innerHTML = "masuk pending";
+                // document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+                /* You may add your own js here, this is just example */
+            },
+            // Optional
+            onError: function(result) {
+                document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+                /* You may add your own js here, this is just example */
+            }
+        });
+    };
 </script>
 
 </html>
