@@ -106,23 +106,24 @@ $snapToken = updateSubtotal($con, $usernameActive);
             </div>
         </div>
     </nav>
-    <div class="isi">
-        <?php
-        if (mysqli_num_rows($result) > 0) :
-        ?>
-            <div class="kiri">
-                <h1 style="color:white;">Keranjang <?= $usernameActive ?></h1>
-                <br>
-                <div class="thumbnail" id="thumbnail">
+    <div class="container-fluid p-4">
+        <h1 style="color:white;" class=""> Your Cart</h1>
+        <div class="row justify-content-between">
+            <?php
+            if (mysqli_num_rows($result) > 0) :
+            ?>
+                <div class="col-md-8">
+                    <div class="thumbnail" id="thumbnail">
+
+                    </div>
+                </div>
+                <div class="col-md-4 bg-success p-3 rounded" id="kanan" style="color:white;">
 
                 </div>
-            </div>
-            <div class="kanan" id="kanan" style="color:white;">
-
-            </div>
-        <?php else :  ?>
-            <h1 class="text-white">YOUR CART IS EMPTY</h1>
-        <?php endif;  ?>
+            <?php else :  ?>
+                <h1 class="text-white">YOUR CART IS EMPTY</h1>
+            <?php endif;  ?>
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
