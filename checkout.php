@@ -1,12 +1,62 @@
 <?php
 require("helper.php");
 if (isset($_POST["logout"])) {
-    unset($_SESSION["username"]);
-    unset($_SESSION["fullname"]);
+    // unset($_SESSION["username"]);
+    // unset($_SESSION["fullname"]);
+    // header("location:login.php");
 }
 if (!isset($_SESSION["username"])) {
-    header("location:login.php");
+    // header("location:login.php");
+} else {
+    $fullnameActive = $_SESSION['fullname'];
+    $usernameActive = $_SESSION['username'];
 }
+
+$ambilUser = mysqli_query($con, "SELECT * FROM `users` WHERE `username`= '$usernameActive';");
+$fetchUser = mysqli_fetch_assoc($ambilUser);
+$iduser = $fetchUser['id'];
+// alert($iduser);
+$result = mysqli_query($con, "SELECT * FROM `cart` WHERE `id_user`= '$iduser';");
+$resultUang = mysqli_query($con, "SELECT SUM(product.price*cart.qty) as 'Total'
+    FROM `cart` 
+    LEFT JOIN `product` ON `cart`.`id_barang` = `product`.`id`
+    WHERE cart.id_user='$iduser';");
+// $resultQty = mysqli_query($con, "SELECT SUM(cart.qty) AS QTY
+//     FROM `cart` 
+//     WHERE cart.id_user='$iduser';");
+// $rowQty = mysqli_fetch_assoc($resultQty);
+$rowUang = mysqli_fetch_assoc($resultUang);
+$TOTAL = $rowUang["Total"] + 19000;
+// $subtotal = $rowUang["Total"];
+// var_dump($snapToken);
+// $ALLQTY = $rowQty["QTY"];
+
+mysqli_query($con, "insert into h_trans values('','" . $iduser . "', '" . $TOTAL . "')");
+alert("berhasil nambah htrans");
+
+$ambilHtransNow = mysqli_query($con, "SELECT MAX(ht_id) AS ht_id FROM `h_trans`");
+$fetchHtransNow = mysqli_fetch_assoc($ambilHtransNow);
+$idHtransNow = $fetchHtransNow['ht_id'];
+while ($row = mysqli_fetch_assoc($result)) {
+    mysqli_query($con, "insert into d_trans values('','" . $idHtransNow . "', '" . $row['id_barang'] . "', '" . $row['qty'] . "')");
+}
+alert("berhasil nambah dtrans");
+mysqli_query($con, "DELETE from cart  WHERE id_user='$iduser'");
+alert("berhasil apus cart");
+// if (isset($_REQUEST['btnAdd'])) {
+//     if (!isset($_SESSION["username"])) {
+//         $_SESSION["redirect"] = basename($_SERVER['REQUEST_URI']);
+//         header("location:login.php");
+//     }
+//     $selectedItem = $_GET["productid"];
+
+//     $ambilUser = mysqli_query($con, "SELECT * FROM `users` WHERE `username`= '$usernameActive';");
+//     $row = mysqli_fetch_assoc($ambilUser);
+//     $idUser = $row['id'];
+
+//     $qty = $_REQUEST['qty'];
+//     mysqli_query($con, "insert into cart values('','" . $idUser . "', '" . $selectedItem . "','" . $qty . "')");
+// }
 ?>
 
 
@@ -25,7 +75,7 @@ if (!isset($_SESSION["username"])) {
 <body>
     <nav class="navbar bg-white">
         <div class="container" style="">
-            <a class="navbar-brand" href="">
+            <a class="navbar-brand" href="catalogue.php">
                 <img src="logo/Somethinc_Logo.png" width="150">
             </a>
             <div class="d-flex" role="search">
@@ -35,14 +85,14 @@ if (!isset($_SESSION["username"])) {
                 ?>
                     <div class="fw-bold mx-5 text-dark login-register"><a href="login.php" class="btn text-decoration-none">Login</a></div>
                 <?php else : ?>
-                    <form method="POST" action="" class="fw-bold mx-5 text-dark login-register"><button class="btn" type="submit" name="logout" class="btnnav">Logout</button></form>
+                    <form method="POST" action="login.php" class="fw-bold mx-5 text-dark login-register"><button class="btn" type="submit" name="logout" class="btnnav">Logout</button></form>
                 <?php endif; ?>
             </div>
         </div>
     </nav>
     <div class="text-center">
         <h1>TERIMA KASIH</h1>
-        <h2>N20312930129301</h2>
+        <h2>NOMOR NOTA HT00<?= $idHtransNow ?></h2>
         <div class="lead">Contact Us</div>
         <div class="lead">+6288-885151</div>
     </div>

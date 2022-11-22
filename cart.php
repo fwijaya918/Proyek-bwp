@@ -14,38 +14,13 @@ if (!isset($_SESSION['username'])) {
     $fullnameActive = $_SESSION['fullname'];
     $usernameActive = $_SESSION['username'];
 }
-// if (isset($_GET["productid"])) {
-//     $productID = $_GET["productid"];
 
-
-// }
-// if (!isset($tempTitle)) {
-//     $tempDesc = "";
-//     $tempHarga = "";
-//     $tempThumb = "";
-//     $tempTitle = "";
-// }
 $ambilUser = mysqli_query($con, "SELECT * FROM `users` WHERE `username`= '$usernameActive';");
 $fetchUser = mysqli_fetch_assoc($ambilUser);
 $iduser = $fetchUser['id'];
 // alert($iduser);
 $result = mysqli_query($con, "SELECT * FROM `cart` WHERE `id_user`= '$iduser';");
 
-
-
-// if (isset($_REQUEST['btnAdd'])) {
-//     if (!isset($_SESSION["username"])) {
-//         $_SESSION["redirect"] = basename($_SERVER['REQUEST_URI']);
-//         header("location:login.php");
-//     }
-//     $selectedItem = $_GET["productid"];
-//     // $add = mysqli_query($con, "SELECT * FROM `product` WHERE `id`= '$selectedItem';");
-//     $idUser = $row['id'];
-//     // $row = mysqli_fetch_assoc($add);
-//     // $idbarang = $row['id'];
-//     $qty = $_REQUEST['qty'];
-//     mysqli_query($con, "insert into cart values('','" . $idUser . "', '" . $selectedItem . "','" . $qty . "')");
-// }
 require_once('Veritrans.php');
 
 //Set Your server key
@@ -230,7 +205,9 @@ $snapToken = updateSubtotal($con, $usernameActive);
                 console.log("success bayar ");
                 alert('success bayar midtrans');
                 // document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
-                document.getElementById('result-json').innerHTML = "masuk sukses";
+                // document.getElementById('result-json').innerHTML = "masuk sukses";
+                pindah();
+                // alert('aaaaa');
                 /* You may add your own js here, this is just example */
                 // $.post("ajax.php",
                 //   { jenis: 'midtranspayment' },
@@ -252,6 +229,10 @@ $snapToken = updateSubtotal($con, $usernameActive);
                 /* You may add your own js here, this is just example */
             }
         });
+    };
+
+    function pindah() {
+        window.location = "checkout.php";
     };
 </script>
 

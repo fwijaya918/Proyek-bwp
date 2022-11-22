@@ -24,7 +24,7 @@ $subtotal = $rowUang["Total"];
 // var_dump($snapToken);
 $ALLQTY = $rowQty["QTY"];
 ?>
-<div action="" method="">
+<div>
     <h3>Rincian Keranjang</h3> <br>
     <h5>Banyak barang dibeli</h5>
     <div id="containerQty">
@@ -37,5 +37,5 @@ $ALLQTY = $rowQty["QTY"];
     <h5>Ongkir</h5>
     <p>Rp 19000</p>
 
-    <button type="submit" onclick="cekout()">Check Out</button>
+    <button type="submit" onclick="cekout()" name="btnCekOut">Check Out</button>
 </div>

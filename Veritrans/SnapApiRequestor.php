@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Send request to Snap API
  * Better don't use this class directly, use Veritrans_Snap
  */
 
-class Veritrans_SnapApiRequestor {
+class Veritrans_SnapApiRequestor
+{
 
   /**
    * Send GET request
@@ -55,7 +57,7 @@ class Veritrans_SnapApiRequestor {
       // We need to combine headers manually, because it's array and it will no be merged
       if (Veritrans_Config::$curlOptions[CURLOPT_HTTPHEADER]) {
         $mergedHeders = array_merge($curl_options[CURLOPT_HTTPHEADER], Veritrans_Config::$curlOptions[CURLOPT_HTTPHEADER]);
-        $headerOptions = array( CURLOPT_HTTPHEADER => $mergedHeders );
+        $headerOptions = array(CURLOPT_HTTPHEADER => $mergedHeders);
       } else {
         $mergedHeders = array();
       }
@@ -89,26 +91,25 @@ class Veritrans_SnapApiRequestor {
 
     if ($result === FALSE) {
       throw new Exception('CURL Error: ' . curl_error($ch), curl_errno($ch));
-    }
-    else {
+    } else {
       try {
         $result_array = json_decode($result);
       } catch (Exception $e) {
-        $message = "API Request Error unable to json_decode API response: ".$result . ' | Request url: '.$url;
+        $message = "API Request Error unable to json_decode API response: " . $result . ' | Request url: ' . $url;
         throw new Exception($message);
       }
       if ($info['http_code'] != 201) {
         $message = 'Midtrans Error (' . $info['http_code'] . '): '
-            . $result . ' | Request url: '.$url;
-        throw new Exception($message, $info['http_code']);
-      }
-      else {
+          . $result . ' | Request url: ' . $url;
+        // throw new Exception($message, $info['http_code']);
+      } else {
         return $result_array;
       }
     }
   }
 
-  private static function processStubed($curl, $url, $server_key, $data_hash, $post) {
+  private static function processStubed($curl, $url, $server_key, $data_hash, $post)
+  {
     VT_Tests::$lastHttpRequest = array(
       "url" => $url,
       "server_key" => $server_key,
