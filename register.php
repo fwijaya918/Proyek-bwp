@@ -51,7 +51,7 @@ if (isset($_REQUEST['btnRegis'])) {
     </style>
 </head>
 
-<body>
+<body class="bg-dark">
     <nav class="navbar bg-white">
         <div class="container-fluid">
             <a class="navbar-brand" href="catalogue.phpimage.png">

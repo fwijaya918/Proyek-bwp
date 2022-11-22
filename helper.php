@@ -1,10 +1,15 @@
 <?php
 
-session_start(); 
+session_start();
 
 function alert($message)
 {
     echo "<script>alert('$message');</script>";
+}
+function rupiah($angka)
+{
+    $hasil_rupiah = "Rp " . number_format($angka, 2, ',', '.');
+    return $hasil_rupiah;
 }
 $con = mysqli_connect('localhost', 'root', '', 'db_proyek');
 

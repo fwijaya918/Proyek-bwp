@@ -17,20 +17,23 @@ if (!isset($_SESSION['username'])) {
     $usernameActive = $_SESSION['username'];
 }
 
-//pagination
-//konfigurasi
-//ngitung halaman
 $jumlahDataPerHalaman = 12;
 $filters = [];
 if (isset($_GET["category"])) {
     $idCat = $_GET["category"];
     $filters[] = "`product_category_id`='$idCat'";
-    // $query = mysqli_real_escape_string($con, htmlspecialchars($_GET["query"]));
-    // $result = mysqli_query($con, "SELECT * FROM `product` WHERE `title` LIKE '%$query%' AND `product_category_id`='$idCat';");
 }
-if (isset($_GET["performsearch"])) {
+if (isset($_POST["performsearch"])) {
+    $pq = $_POST["postquery"];
+    $link = "catalogue.php?query=$pq";
+    if (isset($_GET["category"])) {
+        $idCat = $_GET["category"];
+        $link .= "&category=$idCat";
+    }
+    header("location:" . $link);
+}
+if (isset($_GET["query"])) {
     $query = mysqli_real_escape_string($con, htmlspecialchars($_GET["query"]));
-    // $result = mysqli_query($con, "SELECT * FROM `product` WHERE `title` LIKE '%$query%';");
     $filters[] = "`title` LIKE '%$query%'";
 }
 $wheres = implode(" AND ", $filters);
@@ -80,7 +83,7 @@ $awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
 
 <body class="bg-dark">
     <nav class="navbar bg-white">
-        <div class="container" style="">
+        <div class="container-fluid" style="">
             <a class="navbar-brand" href="">
                 <img src="logo/Somethinc_Logo.png" width="150">
             </a>
@@ -98,11 +101,10 @@ $awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
         </div>
     </nav>
     <div class="container-fluid p-5">
-
-        <form action="" method="get">
-            <input type="text" name="query" class="mb-5" placeholder="Search:" value="<?php if (isset($_GET["query"])) {
-                                                                                            echo $_GET["query"];
-                                                                                        } ?>" id="">
+        <form action="" method="post">
+            <input type="text" name="postquery" class="mb-5" placeholder="Search:" value="<?php if (isset($_GET["query"])) {
+                                                                                                echo $_GET["query"];
+                                                                                            } ?>" id="">
             <button type="submit" class="rounded btn-primary" name="performsearch">Search</button>
         </form>
         <div class="row">
@@ -118,10 +120,10 @@ $awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
                                         if ($_GET["category"] == $row["id_category"]) {
                                             echo "fw-bold";
                                         }
-                                    } ?>" href="catalogue.php?<?php if (isset($_GET["query"])) {
-                                                                    $tempq = $_GET["query"];
-                                                                    echo "?query=$tempq&amp;performsearch=";
-                                                                } ?>&amp;category=<?php echo $row["id_category"] ?>"><?= $row["nama_category"] ?></a>
+                                    } ?>" href="catalogue.php?category=<?php echo $row["id_category"] ?><?php if (isset($_GET["query"])) {
+                                                                                                            $tempq = $_GET["query"];
+                                                                                                            echo "&query=$tempq";
+                                                                                                        } ?>"><?= $row["nama_category"] ?></a>
                         <br>
                     <?php endwhile; ?>
                     <br>
@@ -139,14 +141,14 @@ $awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
                             } else { ?>
                                 <a class="page-link" href="catalogue.php<?php if (isset($_GET["query"])) {
                                                                             $tempq = $_GET["query"];
-                                                                            echo "?query=$tempq&amp;performsearch=";
+                                                                            echo "?query=$tempq";
                                                                         } ?>">
                                     << </a>
                         </li>
                         <li class="page-item">
                             <a class="page-link" href="?halaman=<?= $halamanAktif - 1 ?><?php if (isset($_GET["query"])) {
                                                                                             $tempq = $_GET["query"];
-                                                                                            echo "&amp;query=$tempq&amp;performsearch=";
+                                                                                            echo "&amp;query=$tempq";
                                                                                         } ?>">&lt;</a>
                         </li>
                     <?php
@@ -158,7 +160,7 @@ $awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
                             <li class="page-item active">
                                 <b><a class="page-link" href="?halaman=<?= $i; ?><?php if (isset($_GET["query"])) {
                                                                                         $tempq = $_GET["query"];
-                                                                                        echo "&amp;query=$tempq&amp;performsearch=";
+                                                                                        echo "&amp;query=$tempq";
                                                                                     } ?>"><?= $i ?></a></b>
                             </li>
                         <?php else : ?>
@@ -166,7 +168,7 @@ $awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
 
                                 <a class="page-link" href="?halaman=<?= $i; ?><?php if (isset($_GET["query"])) {
                                                                                     $tempq = $_GET["query"];
-                                                                                    echo "&amp;query=$tempq&amp;performsearch=";
+                                                                                    echo "&amp;query=$tempq";
                                                                                 } ?>"><?= $i ?></a>
                             </li>
                         <?php endif; ?>
@@ -176,14 +178,14 @@ $awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
                         <li class="page-item">
                             <a class="page-link" href="?halaman=<?= $halamanAktif + 1 ?><?php if (isset($_GET["query"])) {
                                                                                             $tempq = $_GET["query"];
-                                                                                            echo "&amp;query=$tempq&amp;performsearch=";
+                                                                                            echo "&amp;query=$tempq";
                                                                                         } ?>">&gt;</a>
                         </li>
                         <li class="page-item">
 
                             <a class="page-link" href="?halaman=<?= $jumlahHalaman ?><?php if (isset($_GET["query"])) {
                                                                                             $tempq = $_GET["query"];
-                                                                                            echo "&amp;query=$tempq&amp;performsearch=";
+                                                                                            echo "&amp;query=$tempq";
                                                                                         } ?>">>></a>
                         </li>
                     <?php

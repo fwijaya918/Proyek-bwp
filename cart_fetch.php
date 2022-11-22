@@ -15,25 +15,39 @@ $result = mysqli_query($con, "SELECT * FROM `cart` WHERE `id_user`= '$iduser';")
 ?>
 
 <?php
+setlocale(LC_MONETARY, "id_ID");
 while ($row = mysqli_fetch_assoc($result)) { ?>
-    <div class="card mb-3" class="w-100" style="">
+    <?php
+    $ambilUlangProduct = mysqli_query($con, "SELECT * FROM `product` WHERE id = '" . $row["id_barang"] . "';");
+    $rowProduct = mysqli_fetch_assoc($ambilUlangProduct);
+    ?>
+    <div class="card mb-3" class="">
         <div class="row g-0">
-            <div class="col-md-4">
-                <img src="product/<?= $rowProduct["thumbnail"]  ?>" class="img-fluid rounded-start" alt="...">
+            <div class="col-md-2">
+                <img draggable="false" src="product/<?= $rowProduct["thumbnail"]  ?>" class="rounded-end" width="auto" style="height: 100%; width: 100%;" alt="...">
             </div>
-            <div class="col-md-8">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+            <div class="col-md-10">
+                <div class="card-body w-100">
+                    <h5 class="card-title"><?= $rowProduct["title"] ?></h5>
+                    <p class="card-text fw-bold mt-3"><?php echo rupiah($rowProduct["price"]); ?></p>
+                    <div class="card-text d-flex fw-bold mt-3 float-end">
+                        <button name="dropBtn" class="mx-2 btn" onclick="drop(this)" value="<?= $row['id_cart'] ?>"><img style="width: 1.5em; height:auto;" src="logo/delete_FILL0_wght400_GRAD0_opsz48.png" alt=""></button>
+                        <button name="kurangBtn" <?php
+                                                    if ($row["qty"] <= 1) {
+                                                        echo "disabled";
+                                                    }
+                                                    ?> class="mx-2 btn" onclick="kurang(this)" value="<?= $row['id_cart'] ?>"><img src="logo/remove_FILL0_wght400_GRAD0_opsz48.png" alt="" class="rounded-circle border border-1 border-dark" style="width: 1em; height:auto;"></button>
+                        <div class="mx-3 px-1 py-3"><?= $row["qty"] ?></div>
+                        <button name="tambahBtn" class="mx-2 btn" onclick="tambah(this)" value="<?= $row['id_cart'] ?>"><img src="logo/add_FILL0_wght400_GRAD0_opsz48.png" alt="" class="rounded-circle border border-1 border-dark" style="width: 1em; height:auto;"></button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="w-100 bg-white d-flex mb-4">
+    <!-- <div class="w-100 bg-white d-flex mb-4">
         <?php
-        $selectedProduct= $rowProduct['id']
-        $ambilUlangProduct = mysqli_query($con, "SELECT * FROM `product` WHERE id_barang==;");
+        // $selectedProduct = $rowProduct['id'];
+        $ambilUlangProduct = mysqli_query($con, "SELECT * FROM `product` WHERE id = '" . $row["id_barang"] . "';");
         while ($rowProduct = mysqli_fetch_assoc($ambilUlangProduct)) {
             if ($row['id_barang'] == $rowProduct['id']) { ?>
                 <div class="fotothumb">
@@ -55,14 +69,14 @@ while ($row = mysqli_fetch_assoc($result)) { ?>
             <h5>Harga Product</h5>
             <p><?= $tempHargaBarang ?></p>
             <h5>Banyak yang dibeli</h5>
-            <p><?= $row['qty'] ?></p>
 
+            <p><?= $row['qty'] ?></p>
             <button name="kurangBtn" onclick="kurang(this)" value="<?= $row['id_cart'] ?>">-</button>
             <button name="tambahBtn" onclick="tambah(this)" value="<?= $row['id_cart'] ?>">+</button>
             <button name="dropBtn" onclick="drop(this)" value="<?= $row['id_cart'] ?>">Delete </button>
         </div>
 
-    </div>
+    </div> -->
 <?php
 }
 ?>

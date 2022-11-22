@@ -90,7 +90,7 @@ $snapToken = updateSubtotal($con, $usernameActive);
 
 <body class="bg-dark" onload="load_ajax()">
     <nav class="navbar bg-white">
-        <div class="container" style="">
+        <div class="container-fluid" style="">
             <a class="navbar-brand" href="catalogue.php">
                 <img src="logo/Somethinc_Logo.png" width="150">
             </a>
@@ -107,7 +107,7 @@ $snapToken = updateSubtotal($con, $usernameActive);
         </div>
     </nav>
     <div class="container-fluid p-4">
-        <h1 style="color:white;" class=""> Your Cart</h1>
+        <h3 style="color:white;" class="mb-4"> Your Cart</h3>
         <div class="row justify-content-between">
             <?php
             if (mysqli_num_rows($result) > 0) :

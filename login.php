@@ -59,7 +59,7 @@ if (isset($_REQUEST['btnlogin'])) {
     }
 </style>
 
-<body class="bg-secondary">
+<body class="bg-dark">
     <nav class="navbar bg-white">
         <div class="container-fluid">
             <a class="navbar-brand" href="catalogue.php">
