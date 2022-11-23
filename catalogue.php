@@ -78,6 +78,14 @@ $awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
             /* color: white; */
             text-decoration: none;
         }
+
+        .ellipsis {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
     </style>
 </head>
 
@@ -88,14 +96,16 @@ $awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
                 <img src="logo/Somethinc_Logo.png" width="150">
             </a>
             <div class="d-flex" role="search">
-                <div class="mx-3 mt-2"><a href="cart.php"><img src="logo/shopping_cart_FILL0_wght400_GRAD0_opsz48.png" height="25px" alt=""></a></div>
-                <div class="mx-3 mt-2"><a href="history.php"><img src="logo/history.png" height="25px" alt=""></a></div>
+                <?php if (isset($_SESSION["username"])) : ?>
+                    <div class="mx-3 mt-2"><a href="cart.php"><img src="logo/shopping_cart_FILL0_wght400_GRAD0_opsz48.png" height="25px" alt=""></a></div>
+                    <div class="mx-3 mt-2"><a href="history.php"><img src="logo/history.png" height="25px" alt=""></a></div>
+                <?php endif; ?>
                 <?php
                 if (!isset($_SESSION["username"])) :
                 ?>
-                    <div class="fw-bold mx-5 text-dark login-register"><a href="login.php" class="btn text-decoration-none">Login</a></div>
+                    <div class="fw-bold mx-3 text-dark login-register"><a href="login.php" class="btn text-decoration-none"><img src="logo/login_FILL0_wght400_GRAD0_opsz48.png" height="25px" alt=""></a></div>
                 <?php else : ?>
-                    <form method="POST" action="" class="fw-bold mx-5 text-dark login-register"><button class="btn" type="submit" name="logout" class="btnnav">Logout</button></form>
+                    <form method="POST" action="" class="fw-bold mx-3 text-dark login-register"><button class="btn" type="submit" name="logout" class="btnnav"><img src="logo/logout_FILL0_wght400_GRAD0_opsz48.png" height="25px" alt=""></button></form>
                 <?php endif; ?>
                 <div class="mx-3 mt-2"><a href="index.php"><img src="logo/profileicon.png" height="25px" alt=""></a></div>
             </div>
@@ -109,7 +119,7 @@ $awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
             <button type="submit" class="rounded btn-primary" name="performsearch">Search</button>
         </form>
         <div class="row">
-            <div class="col-2">
+            <div class="col-md-2">
                 <div class="w100 rounded bg-white p-2">
                     <!-- <h3 class="">Filter:</h3> -->
                     <h5>Category:</h5>
@@ -131,7 +141,7 @@ $awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
                     <a href="catalogue.php"><button class="btn btn-primary">Reset Filter</button></a>
                 </div>
             </div>
-            <div class="col-10">
+            <div class="col-md-10">
                 <h5 style="color:white;">Halaman</h5>
                 <nav>
                     <ul class="pagination">
@@ -143,14 +153,20 @@ $awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
                                 <a class="page-link" href="catalogue.php<?php if (isset($_GET["query"])) {
                                                                             $tempq = $_GET["query"];
                                                                             echo "?query=$tempq";
-                                                                        } ?>">
+                                                                        } ?><?php if (isset($_GET["category"])) {
+                                                                                $tempcat = $_GET["category"];
+                                                                                echo "&amp;category=$tempcat";
+                                                                            } ?>">
                                     << </a>
                         </li>
                         <li class="page-item">
                             <a class="page-link" href="?halaman=<?= $halamanAktif - 1 ?><?php if (isset($_GET["query"])) {
                                                                                             $tempq = $_GET["query"];
                                                                                             echo "&amp;query=$tempq";
-                                                                                        } ?>">&lt;</a>
+                                                                                        } ?><?php if (isset($_GET["category"])) {
+                                                                                                $tempcat = $_GET["category"];
+                                                                                                echo "&amp;category=$tempcat";
+                                                                                            } ?>">&lt;</a>
                         </li>
                     <?php
                             }
@@ -162,7 +178,10 @@ $awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
                                 <b><a class="page-link" href="?halaman=<?= $i; ?><?php if (isset($_GET["query"])) {
                                                                                         $tempq = $_GET["query"];
                                                                                         echo "&amp;query=$tempq";
-                                                                                    } ?>"><?= $i ?></a></b>
+                                                                                    } ?><?php if (isset($_GET["category"])) {
+                                                                                            $tempcat = $_GET["category"];
+                                                                                            echo "&amp;category=$tempcat";
+                                                                                        } ?>"><?= $i ?></a></b>
                             </li>
                         <?php else : ?>
                             <li class="page-item">
@@ -170,7 +189,10 @@ $awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
                                 <a class="page-link" href="?halaman=<?= $i; ?><?php if (isset($_GET["query"])) {
                                                                                     $tempq = $_GET["query"];
                                                                                     echo "&amp;query=$tempq";
-                                                                                } ?>"><?= $i ?></a>
+                                                                                } ?><?php if (isset($_GET["category"])) {
+                                                                                        $tempcat = $_GET["category"];
+                                                                                        echo "&amp;category=$tempcat";
+                                                                                    } ?>"><?= $i ?></a>
                             </li>
                         <?php endif; ?>
                     <?php endfor; ?>
@@ -180,36 +202,43 @@ $awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
                             <a class="page-link" href="?halaman=<?= $halamanAktif + 1 ?><?php if (isset($_GET["query"])) {
                                                                                             $tempq = $_GET["query"];
                                                                                             echo "&amp;query=$tempq";
-                                                                                        } ?>">&gt;</a>
+                                                                                        } ?><?php if (isset($_GET["category"])) {
+                                                                                                $tempcat = $_GET["category"];
+                                                                                                echo "&amp;category=$tempcat";
+                                                                                            } ?>">&gt;</a>
                         </li>
                         <li class="page-item">
 
                             <a class="page-link" href="?halaman=<?= $jumlahHalaman ?><?php if (isset($_GET["query"])) {
                                                                                             $tempq = $_GET["query"];
                                                                                             echo "&amp;query=$tempq";
-                                                                                        } ?>">>></a>
+                                                                                        } ?><?php if (isset($_GET["category"])) {
+                                                                                                $tempcat = $_GET["category"];
+                                                                                                echo "&amp;category=$tempcat";
+                                                                                            } ?>">>></a>
                         </li>
                     <?php
                     } ?>
                     </ul>
 
                 </nav>
-                <div class="row row-cols-4 gy-3">
+                <h5 class="text-white"><?= $jumlahData ?> Results</h5>
+
+                <div class="row row-cols-md-4 gy-3">
                     <?php
                     //pagination intinya limit startingIdx, sampai berapa
                     $products = mysqli_query($con, "$base LIMIT $awalData, $jumlahDataPerHalaman;");
-
                     while ($row = mysqli_fetch_assoc($products)) {
                         echo '<div class="col">';
                         echo '<a href="detail.php?productid= ' . $row['id'] . '" class="text-decoration-none text-dark">';
-                        echo '<div class="card p-2 mb-5 h-100">';
-                        echo '<img src="product/' . $row["thumbnail"] . '" style="width:250px; height:250px; margin-left:20px;" class="card-img-top border border-2 border-dark rounded" alt="' . $row["title"] . '">';
+                        echo '<div class="card position-relative p-2 mb-2 h-100">';
+                        echo '<img src="product/' . urlencode($row["thumbnail"]) . '" class="card-img-top border border-2 border-dark rounded" alt="' . $row["title"] . '">';
                         echo '<div class="card-body text-center">';
-                        echo '<h5 class="card-title fixheight mb-3">';
+                        echo '<h5 class="card-title ellipsis fixheight mb-3">';
                         echo $row["title"];
                         echo '</h5>';
-                        echo '<p class="card-text">';
-                        echo $row["price"];
+                        echo '<p class="mt-4 py-2 text-white rounded bg-primary">';
+                        echo rupiah($row["price"]);
                         echo '</p>';
                         echo "</div>";
                         echo "</div>";
@@ -219,8 +248,6 @@ $awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
                         ob_flush();
                     }
                     ?>
-                    <!-- navigasi -->
-
                 </div>
                 <br>
                 <nav>
