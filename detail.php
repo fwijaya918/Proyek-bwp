@@ -71,42 +71,47 @@ if (isset($_REQUEST['btnAdd'])) {
             </div>
         </div>
     </nav>
-    <div class="isi">
-        <div class="kiri">
-            <div class="thumbnail">
-                <?php
-                while ($row = mysqli_fetch_assoc($result)) { ?>
-                    <img src="product/<?= $row["thumbnail"]  ?>" class="card-img-top border border-2 border-dark rounded" alt="'<?= $row["title"]  ?>'">
-                <?php
+    <div class="container-fluid">
+        <div class="row px-5 py-5 justify-content-between">
+            <div class="col-8 bg-dark rounded-end p-0">
+                <div class="d-flex justify-content-start"><?php
+                                                            $row = mysqli_fetch_assoc($result); ?>
+                    <img src="product/<?= $row["thumbnail"]  ?>" style="height: 50vh;" class="w-auto rounded" alt="'<?= $row["title"]  ?>'">
+                    <?php
                     $tempDesc =  $row['description'];
                     $tempHarga =  $row['price'];
                     $tempThumb = $row['thumbnail'];
                     $tempTitle = $row['title'];
-                }
-                ?>
+                    ?>
+                    <div class="bg-white ms-3 rounded misc px-4">
+                        <h4 class="fw-bold"><?= $tempTitle ?></h4>
+                        <h3><?= rupiah($tempHarga) ?></h3>
+                        <div class="">
+                            <h6 class="">Description</h6>
+                            <p><?= $tempDesc ?></p>
+                        </div>
+                        <div class="">
+                            <h6 class="">Shipping</h6>
+                            <p>Ongkir Reguler 19 rb</p>
+                            <?php
+                            $DateStart = date_create("now", new DateTimeZone('Asia/Jakarta'));
+                            $DateEnd = date_create("now", new DateTimeZone('Asia/Jakarta'));
+                            date_add($DateStart, date_interval_create_from_date_string("3 days"));
+                            date_add($DateEnd, date_interval_create_from_date_string("5 days"));
+                            ?>
+                            <p class="text-muted">Estimasi Tiba <?= date_format($DateStart, "d M"); ?> - <?= date_format($DateEnd, "d M"); ?> </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3 bg-danger">
+                <form action="" method="post">
+                    <h5>Jumlah Barang :</h5>
+                    <input type="number" name="qty" id=""> Pcs <br><br>
+                    <button type="submit" style="" name="btnAdd">Add to Cart</button>
+                </form>
             </div>
         </div>
-        <div class="kanan">
-            <form action="" method="post">
-                <h3>Atur jumlah</h3>
-                <img src="product/<?= $tempThumb ?>" alt=""><br><br>
-                <h5>Nama Barang :</h5>
-                <p style="color:white;"><?= $tempTitle ?></p>
-                <h5>Harga :</h5>
-                <p style="color:white;"> Rp <?= $tempHarga ?></p>
-                <h5>Jumlah Barang :</h5>
-                <input type="number" name="qty" id=""> Pcs <br><br>
-                <button type="submit" style="background-color:green; width:280px;  " name="btnAdd">Add to Cart</button>
-            </form>
-
-        </div>
-    </div>
-    <div class="description">
-        <h3>Description</h3>
-        <div class="containerdesc">
-            <p><?= $tempDesc ?></p>
-        </div>
-
 
     </div>
 
