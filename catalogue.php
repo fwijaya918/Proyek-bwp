@@ -89,6 +89,7 @@ $awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
             </a>
             <div class="d-flex" role="search">
                 <div class="mx-3 mt-2"><a href="cart.php"><img src="logo/shopping_cart_FILL0_wght400_GRAD0_opsz48.png" height="25px" alt=""></a></div>
+                <div class="mx-3 mt-2"><a href="history.php"><img src="logo/history.png" height="25px" alt=""></a></div>
                 <?php
                 if (!isset($_SESSION["username"])) :
                 ?>
@@ -202,7 +203,7 @@ $awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
                         echo '<div class="col">';
                         echo '<a href="detail.php?productid= ' . $row['id'] . '" class="text-decoration-none text-dark">';
                         echo '<div class="card p-2 mb-5 h-100">';
-                        echo '<img src="product/' . $row["thumbnail"] . '" class="card-img-top border border-2 border-dark rounded" alt="' . $row["title"] . '">';
+                        echo '<img src="product/' . $row["thumbnail"] . '" style="width:250px; height:250px; margin-left:20px;" class="card-img-top border border-2 border-dark rounded" alt="' . $row["title"] . '">';
                         echo '<div class="card-body text-center">';
                         echo '<h5 class="card-title fixheight mb-3">';
                         echo $row["title"];
