@@ -84,16 +84,16 @@ if (isset($_REQUEST['btnAdd'])) {
             <div class="col-8 bg-dark rounded-end p-0">
                 <div class="d-flex justify-content-start"><?php
                                                             $row = mysqli_fetch_assoc($result); ?>
-                    <img src="product/<?= $row["thumbnail"]  ?>" style="height: 50vh;" class="w-auto rounded" alt="'<?= $row["title"]  ?>'">
+                    <img src="product/<?= urlencode($row["thumbnail"]) ?>" style="height: 50vh;" class="w-auto rounded" alt="'<?= $row["title"]  ?>'">
                     <?php
                     $tempDesc =  $row['description'];
                     $tempHarga =  $row['price'];
                     $tempThumb = $row['thumbnail'];
                     $tempTitle = $row['title'];
                     ?>
-                    <div class="bg-white ms-3 rounded misc px-4">
+                    <div class="bg-white ms-3 rounded misc p-4">
                         <h4 class="fw-bold"><?= $tempTitle ?></h4>
-                        <h3><?= rupiah($tempHarga) ?></h3>
+                        <h3 class="fw-bold"><?= rupiah($tempHarga) ?></h3>
                         <div class="">
                             <h6 class="">Description</h6>
                             <p><?= $tempDesc ?></p>
@@ -112,7 +112,7 @@ if (isset($_REQUEST['btnAdd'])) {
                     </div>
                 </div>
             </div>
-            <div class="col-3 bg-danger">
+            <div class="col-3 bg-primary rounded">
                 <form action="" method="post">
                     <h5>Jumlah Barang :</h5>
                     <input type="number" name="qty" id=""> Pcs <br><br>
