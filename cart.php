@@ -72,7 +72,9 @@ function updateSubtotal($con, $usernameActive)
     $snapToken = Veritrans_Snap::getSnapToken($transaction);
     return $snapToken;
 }
-$snapToken = updateSubtotal($con, $usernameActive);
+if (mysqli_num_rows($result) > 0) {
+    $snapToken = updateSubtotal($con, $usernameActive);
+}
 ?>
 
 <!DOCTYPE html>
@@ -107,11 +109,12 @@ $snapToken = updateSubtotal($con, $usernameActive);
         </div>
     </nav>
     <div class="container-fluid p-4">
-        <h3 style="color:white;" class="mb-4"> Your Cart</h3>
-        <div class="row justify-content-between">
-            <?php
-            if (mysqli_num_rows($result) > 0) :
-            ?>
+        <?php
+        if (mysqli_num_rows($result) > 0) :
+        ?>
+            <h3 style="color:white;" class="mb-4"> Your Cart</h3>
+            <div class="row justify-content-between">
+
                 <div class="col-md-8">
                     <div class="thumbnail" id="thumbnail">
 
@@ -121,9 +124,14 @@ $snapToken = updateSubtotal($con, $usernameActive);
 
                 </div>
             <?php else :  ?>
-                <h1 class="text-white">YOUR CART IS EMPTY</h1>
+                <div class="w-50 bg-white text-center rounded m-auto p-5">
+                    <h3 class="text-dark">YOUR CART IS EMPTY</h3>
+                    <img src="logo/production_quantity_limits_FILL0_wght400_GRAD0_opsz48.svg" alt="" class="w-25 my-3">
+                    <div class="text-muted">Looks like you have not added anything to your cart. Go ahead and explore our products.</div>
+                    <a href="catalogue.php"><button class="btn btn-outline-primary mt-4">Shop Now</button></a>
+                </div>
             <?php endif;  ?>
-        </div>
+            </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

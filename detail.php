@@ -36,7 +36,15 @@ if (isset($_REQUEST['btnAdd'])) {
     // $row = mysqli_fetch_assoc($add);
     // $idbarang = $row['id'];
     $qty = $_REQUEST['qty'];
-    mysqli_query($con, "insert into cart values('','" . $idUser . "', '" . $selectedItem . "','" . $qty . "')");
+    $cekexist = mysqli_query($con, "Select * from cart WHERE id_user='$idUser' AND id_barang='$selectedItem'");
+    if (mysqli_num_rows($cekexist) > 0) {
+        $oldcart = mysqli_fetch_assoc($cekexist);
+        $oldid = $oldcart["id_cart"];
+        mysqli_query($con, "UPDATE `cart` SET `qty` = qty+$qty WHERE `cart`.`id_cart` = $oldid");
+    } else {
+        mysqli_query($con, "insert into cart values('','" . $idUser . "', '" . $selectedItem . "','" . $qty . "')");
+    }
+    header("location:cart.php");
 }
 ?>
 
