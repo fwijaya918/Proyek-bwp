@@ -12,7 +12,6 @@ if (!isset($_SESSION['username'])) {
 }
 if (isset($_GET["productid"])) {
     $productID = $_GET["productid"];
-
     $result = mysqli_query($con, "SELECT * FROM `product` WHERE `id`= '$productID';");
 }
 if (!isset($tempTitle)) {

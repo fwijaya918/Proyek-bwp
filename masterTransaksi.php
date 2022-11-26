@@ -1,13 +1,9 @@
 <?php
 require('helper.php');
-if (isset($_REQUEST['deleteBtn'])) {
-    $hapusID = $_REQUEST['deleteID'];
-    mysqli_query($con, "DELETE from users  WHERE id='$hapusID'");
-    alert("berhasil delete user");
-}
-$ambilUser = mysqli_query($con, "SELECT * FROM `users`;");
 
+$result = mysqli_query($con, "SELECT * FROM h_trans;");
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,7 +14,6 @@ $ambilUser = mysqli_query($con, "SELECT * FROM `users`;");
     <title>Document</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="styleMU.css">
 </head>
 
 <body class="bg-dark">
@@ -36,41 +31,37 @@ $ambilUser = mysqli_query($con, "SELECT * FROM `users`;");
             </div>
         </div>
     </nav>
-    <div class="container">
-        <h1>Welcome, Admin!</h1>
-        <div class="hiasan">
-            <h3>Menu Master User</h3>
-
+    <br>
+    <h1 style="color:white;">History Transaction</h1><br>
+    <?php
+    setlocale(LC_MONETARY, "id_ID");
+    while ($row = mysqli_fetch_assoc($result)) {
+        $ambilUser = mysqli_query($con, "SELECT * FROM users WHERE id= $row[user_id];");
+        $fetchUser = mysqli_fetch_assoc($ambilUser);
+        $nameUser = $fetchUser['username'];
+    ?>
+        <div class="card mb-3" class="" style="padding-left:10%; padding-right:10%; background-color:green;">
+            <div class="row g-0">
+                <div class="col-md-6">
+                    <div class="card-body w-100" style="background-color:green;">
+                        <h5 class="card-title">HT00<?= $row["ht_id"] ?></h5>
+                        <p class="card-text fw-bold mt-3"><?php echo rupiah($row["total"]); ?></p>
+                        <p class="card-text fw-bold mt-3"><?php echo ($nameUser); ?></p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card-body w-100" style="background-color:green;">
+                        <h5 class="card-title">Detail Transaction</h5>
+                        <h5>Status : Done</h5>
+                        <div class="fw-bold mx-3 text-dark login-register"><a href="dtrans.php?htransid= ' <?= $row['ht_id'] ?> '" class="btn text-decoration-none">See Detail</a></div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <table id="tableUser">
-            <thead>
-                <th>Nomor</th>
-                <th>ID User</th>
-                <th>Username</th>
-                <th>Fullname</th>
-                <th>Password</th>
-            </thead>
-            <?php
-            $nomor = 0;
-            while ($row = mysqli_fetch_array($ambilUser)) {
-                $nomor++;
-                echo "<tr>
-                <td>" . ($nomor) . "</td>
-                <td>US" . $row['id'] . "</td>
-                <td>" . $row['username'] . "</td>
-                <td>" . $row['fullname'] . "</td>
-                <td>" . $row['password'] . "</td>
-                <td>
-                    <form action='./masterUser.php' method='post'>
-                    <input type='hidden' name='deleteID' value=" . $row['id'] . ">
-                    <button type='submit' name='deleteBtn'>Delete</button></form>
-                </td>
-                </tr>";
-            }
-            ?>
-        </table>
 
-    </div>
+    <?php
+    }
+    ?>
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

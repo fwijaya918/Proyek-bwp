@@ -99,12 +99,12 @@ if (isset($_REQUEST['btnlogin'])) {
     </div>
     <div class="text-center w-50 mx-auto bg-white rounded mt-4 py-4 px-2 mb-4 border border-secondary border-3 rounded row g-3 justify-content-between needs-validation was-validated">
         <div class="h3">
-            Don't have a ConnectedIn Account?
+            Don't have a Somethinc Account?
         </div>
         <div class="col-12 justify-content-center text-center">
             <a href="register.php"><button class="btn btn-outline-primary py-3 w-100" name="register">Create Account</button></a>
         </div>
-        <div class="text-muted mt-5">&copy; ConnectedIn 2022</div>
+        <div class="text-muted mt-5">&copy; Somethinc 2022</div>
     </div>
 
 
