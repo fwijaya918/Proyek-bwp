@@ -86,36 +86,53 @@ $awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
         }
+
+        .align-center {
+            align-items: center;
+        }
     </style>
 </head>
 
 <body class="bg-dark">
     <nav class="navbar bg-white">
         <div class="container-fluid" style="">
-            <a class="navbar-brand" href="">
+            <a class="navbar-brand" href="welcome.php">
                 <img src="logo/Somethinc_Logo.png" width="150">
             </a>
             <div class="d-flex" role="search">
+                <div class="mx-3 mt-2"><a href="catalogue.php"><img src="logo/menu_book_FILL0_wght400_GRAD0_opsz48.png" height="25px" alt=""></a></div>
                 <?php if (isset($_SESSION["username"])) : ?>
                     <div class="mx-3 mt-2"><a href="cart.php"><img src="logo/shopping_cart_FILL0_wght400_GRAD0_opsz48.png" height="25px" alt=""></a></div>
-                    <div class="mx-3 mt-2"><a href="history.php"><img src="logo/history.png" height="25px" alt=""></a></div>
+                    <div class="mx-3 mt-2"><a href="history.php"><img src="logo/history.png" height="30px" alt=""></a></div>
                 <?php endif; ?>
                 <?php
                 if (!isset($_SESSION["username"])) :
                 ?>
-                    <div class="fw-bold mx-3 text-dark login-register"><a href="login.php" class="btn text-decoration-none"><img src="logo/login_FILL0_wght400_GRAD0_opsz48.png" height="25px" alt=""></a></div>
+                    <div class="fw-bold mx-3 mt-2 text-dark login-register">
+                        <a href="login.php" class="btn p-0 py-0 ps-3 pe-2 d-flex bg-primary text-decoration-none">
+                            <div>Sign In</div>
+                            <img src="logo/login_FILL0_wght400_GRAD0_opsz48.png" height="25px" alt="">
+                        </a>
+                    </div>
                 <?php else : ?>
-                    <form method="POST" action="" class="fw-bold mx-3 text-dark login-register"><button class="btn" type="submit" name="logout" class="btnnav"><img src="logo/logout_FILL0_wght400_GRAD0_opsz48.png" height="25px" alt=""></button></form>
+                    <form method="POST" action="" class="mx-3 mt-2 d-flex fw-bold h-auto align-center text-dark login-register bg-primary rounded">
+                        <button type="submit" name="logout" class="btn py-0 ps-3 pe-2 d-flex justify-content-between">
+                            <div class="me-2">Sign Out</div>
+                            <div>
+                                <img src="logo/logout_FILL0_wght400_GRAD0_opsz48.png" height="25px" alt="">
+                            </div>
+                        </button>
+                    </form>
                 <?php endif; ?>
                 <div class="mx-3 mt-2"><a href="index.php"><img src="logo/profileicon.png" height="25px" alt=""></a></div>
             </div>
         </div>
     </nav>
     <div class="container-fluid p-5">
-        <form action="" method="post">
-            <input type="text" name="postquery" class="mb-5" placeholder="Search:" value="<?php if (isset($_GET["query"])) {
-                                                                                                echo $_GET["query"];
-                                                                                            } ?>" id="">
+        <form action="" method="post" class="input-group w-50 mb-5">
+            <input type="text" name="postquery" class="w-25 form-control" placeholder="Search:" value="<?php if (isset($_GET["query"])) {
+                                                                                                            echo $_GET["query"];
+                                                                                                        } ?>" id="">
             <button type="submit" class="rounded btn-primary" name="performsearch">Search</button>
         </form>
         <div class="row">

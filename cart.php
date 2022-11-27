@@ -68,7 +68,6 @@ function updateSubtotal($con, $usernameActive)
         'transaction_details' => $transaction_details,
         // 'enabled_payments' => $enable_payments,
     );
-
     $snapToken = Veritrans_Snap::getSnapToken($transaction);
     return $snapToken;
 }

@@ -25,17 +25,14 @@ $subtotal = $rowUang["Total"];
 $ALLQTY = $rowQty["QTY"];
 ?>
 <div>
-    <h3>Rincian Keranjang</h3> <br>
-    <h5>Banyak barang dibeli</h5>
-    <div id="containerQty">
-        <?= $ALLQTY ?>
-    </div>
+    <h3>Rincian Keranjang</h3>
     <h5>Subtotal</h5>
     <div id="containerSubTotal">
-        <?= $TOTAL ?>
+        <?= rupiah($TOTAL) ?> (<?= $ALLQTY ?> item<?php if ($ALLQTY > 1) {
+                                                        echo "s";
+                                                    } ?>)
     </div>
     <h5>Ongkir</h5>
-    <p>Rp 19000</p>
-
+    <div>Rp 19.000,00</div> <br>
     <button type="submit" onclick="cekout()" name="btnCekOut">Check Out</button>
 </div>

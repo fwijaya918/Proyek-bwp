@@ -68,8 +68,7 @@ if (isset($_GET["htransid"])) {
             <div class="row g-0">
                 <div class="col-md-6">
                     <div class="card-body w-100" style="">
-                        <h5 class="card-title">DT00<?= $row["dt_id"] ?></h5>
-                        <p class="card-text fw-bold mt-3">Product ID: <?php echo ($row["product_id"]); ?></p>
+                        <h5 class="card-title"><?= $fetchProduct["title"] ?></h5>
                         <p class="card-text fw-bold mt-3"><img src="product/<?= $fotoProduct ?>" alt="" style="width:200px;height:200px;"></p>
                         <p class="card-text fw-bold mt-3"><?php echo rupiah($hargaProduct); ?></p>
                     </div>

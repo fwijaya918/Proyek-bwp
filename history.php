@@ -73,7 +73,7 @@ $result = mysqli_query($con, "SELECT * FROM h_trans where user_id='$iduser';");
                     <div class="card-body w-100" style="background-color:green;">
                         <h5 class="card-title">Detail Transaction</h5>
                         <h5>Status : Done</h5>
-                        <div class="fw-bold mx-3 text-dark login-register"><a href="dtrans.php?htransid= ' <?= $row['ht_id'] ?> '" class="btn text-decoration-none">See Detail</a></div>
+                        <div class="fw-bold mx-3 text-dark login-register"><a href="dtrans.php?htransid=<?= $row['ht_id'] ?>" class="btn text-decoration-none">See Detail</a></div>
                     </div>
                 </div>
             </div>
