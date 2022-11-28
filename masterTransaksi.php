@@ -40,17 +40,17 @@ $result = mysqli_query($con, "SELECT * FROM h_trans;");
         $fetchUser = mysqli_fetch_assoc($ambilUser);
         $nameUser = $fetchUser['username'];
     ?>
-        <div class="card mb-3" class="" style="padding-left:10%; padding-right:10%; background-color:green;">
+        <div class="card mb-3" class="" style="padding-left:10%; padding-right:10%; background-color:#212529;">
             <div class="row g-0">
                 <div class="col-md-6">
-                    <div class="card-body w-100" style="background-color:green;">
+                    <div class="card-body w-100" style="background-color:green; height:150px;">
                         <h5 class="card-title">HT00<?= $row["ht_id"] ?></h5>
                         <p class="card-text fw-bold mt-3"><?php echo rupiah($row["total"]); ?></p>
                         <p class="card-text fw-bold mt-3"><?php echo ($nameUser); ?></p>
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="card-body w-100" style="background-color:green;">
+                    <div class="card-body w-100" style="background-color:green;height:150px;">
                         <h5 class="card-title">Detail Transaction</h5>
                         <h5>Status : Done</h5>
                         <div class="fw-bold mx-3 text-dark login-register"><a href="dtrans.php?htransid= ' <?= $row['ht_id'] ?> '" class="btn text-decoration-none">See Detail</a></div>

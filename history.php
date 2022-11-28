@@ -56,21 +56,21 @@ $result = mysqli_query($con, "SELECT * FROM h_trans where user_id='$iduser';");
         </div>
     </nav>
     <br>
-    <h1 style="color:white;">History Transaction</h1><br>
+    <h1 style="color:white; margin-left:50px; ">History Transaction</h1><br>
     <?php
     setlocale(LC_MONETARY, "id_ID");
     while ($row = mysqli_fetch_assoc($result)) { ?>
-        <div class="card mb-3" class="" style="padding-left:10%; padding-right:10%; background-color:green;">
+        <div class="card mb-3" class="" style="padding-left:10%; padding-right:10%; background-color:#212529;">
             <div class="row g-0">
                 <div class="col-md-6">
-                    <div class="card-body w-100" style="background-color:green;">
+                    <div class="card-body w-100" style="background-color:green; height:150px;">
                         <h5 class="card-title">HT00<?= $row["ht_id"] ?></h5>
                         <p class="card-text fw-bold mt-3"><?php echo rupiah($row["total"]); ?></p>
                         <p class="card-text fw-bold mt-3"><?php echo ($usernameActive); ?></p>
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="card-body w-100" style="background-color:green;">
+                    <div class="card-body w-100" style="background-color:green;height:150px;">
                         <h5 class="card-title">Detail Transaction</h5>
                         <h5>Status : Done</h5>
                         <div class="fw-bold mx-3 text-dark login-register"><a href="dtrans.php?htransid=<?= $row['ht_id'] ?>" class="btn text-decoration-none">See Detail</a></div>

@@ -64,17 +64,18 @@ if (isset($_GET["htransid"])) {
         $hargaProduct = $fetchProduct['price'];
         $totalPrice = $hargaProduct * $row['product_qty'];
     ?>
-        <div class="card mb-3" class="" style="padding-left:10%; padding-right:10%; background-color:gray;">
+        <br>
+        <div class="card mb-3" class="" style="padding-left:10%; padding-right:10%; background-color:#212529; color:white;">
             <div class="row g-0">
                 <div class="col-md-6">
-                    <div class="card-body w-100" style="">
+                    <div class="card-body w-100" style="background-color:green; height:350px;">
                         <h5 class="card-title"><?= $fetchProduct["title"] ?></h5>
                         <p class="card-text fw-bold mt-3"><img src="product/<?= $fotoProduct ?>" alt="" style="width:200px;height:200px;"></p>
                         <p class="card-text fw-bold mt-3"><?php echo rupiah($hargaProduct); ?></p>
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="card-body w-100" style="">
+                    <div class="card-body w-100" style="background-color:green; height:350px;">
                         <h5 class="card-title">Quantity</h5>
                         <p class="card-text fw-bold mt-3"><?php echo ($row['product_qty']); ?></p>
                         <h5 class="card-title">Total Price</h5>
