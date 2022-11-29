@@ -17,6 +17,15 @@ $resultUang = mysqli_query($con, "SELECT SUM(product.price*cart.qty) as 'Total'
 $resultQty = mysqli_query($con, "SELECT SUM(cart.qty) AS QTY
     FROM `cart` 
     WHERE cart.id_user='$iduser';");
+$compareStock = mysqli_query($con, "SELECT product.stok, cart.qty FROM cart LEFT JOIN `product` ON `cart`.`id_barang` = `product`.`id`
+WHERE cart.id_user='$iduser';");
+$isEmpty = false;
+while ($cekStok = mysqli_fetch_assoc($compareStock)) {
+    if ($cekStok["stok"] < $cekStok["qty"]) {
+        $isEmpty = true;
+        break;
+    }
+}
 $rowQty = mysqli_fetch_assoc($resultQty);
 $rowUang = mysqli_fetch_assoc($resultUang);
 $TOTAL = $rowUang["Total"];
@@ -34,5 +43,7 @@ $ALLQTY = $rowQty["QTY"];
     </div>
     <h5>Ongkir</h5>
     <div>Rp 19.000,00</div> <br>
-    <button type="submit" onclick="cekout()" name="btnCekOut">Check Out</button>
+    <button type="submit" onclick="cekout()" <?php if ($isEmpty) {
+                                                    echo "disabled";
+                                                } ?> name="btnCekOut">Check Out</button>
 </div>

@@ -38,6 +38,10 @@ $ambilHtransNow = mysqli_query($con, "SELECT MAX(ht_id) AS ht_id FROM `h_trans`"
 $fetchHtransNow = mysqli_fetch_assoc($ambilHtransNow);
 $idHtransNow = $fetchHtransNow['ht_id'];
 while ($row = mysqli_fetch_assoc($result)) {
+    $curBar = $row["id_barang"];
+    $curQty = $row["qty"];
+    mysqli_query($con, "UPDATE `product` SET `stok` = stok - $curQty WHERE `product`.`id` = '$curBar'");
+
     mysqli_query($con, "insert into d_trans values('','" . $idHtransNow . "', '" . $row['id_barang'] . "', '" . $row['qty'] . "')");
 }
 alert("berhasil nambah dtrans");

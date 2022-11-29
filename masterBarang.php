@@ -11,9 +11,11 @@ if (isset($_POST["btnSubmit"])) {
     $desc = $_REQUEST['inDesc'];
     $price = $_REQUEST['inPrice'];
     $category = $_REQUEST['codeKategori'];
+    $qty = $_REQUEST['qty'];
+
     // $username = $usernameActive;
     // $fullname = $fullnameActive;
-    if ($title == "" || $desc == "") {
+    if ($title == "" || $desc == "" || $price) {
         alert("ada yang kosong");
     } else {
         if (!empty($_FILES["image"]["name"])) {
@@ -34,7 +36,7 @@ if (isset($_POST["btnSubmit"])) {
                 alert("Ukuran file melebihi batas");
             }
 
-            $result = mysqli_query($con, "insert INTO product (id , title, price, description, thumbnail, product_category_id) VALUES ('','" . $title . "' , '" . $price . "' , '" . $desc . "' ,'" . $_FILES['image']['name'] . "' ,'" . $category . "')");
+            $result = mysqli_query($con, "insert INTO product (id , title, price, description, thumbnail, product_category_id, stok) VALUES ('','" . $title . "' , '" . $price . "' , '" . $desc . "' ,'" . $_FILES['image']['name'] . "' ,'" . $category . "', '" . $qty . "')");
             if ($result) {
                 alert("berhasil upload");
             } else {
@@ -101,7 +103,12 @@ if (isset($_POST["btnSubmit"])) {
                     ?>
                 </select>
             </div>
-
+            <h5>Quantity :</h5>
+            <div class="input-group mb-4 w-50">
+                <button class="btn fw-bold btn-dark w-25 text-center" id="kurang" onclick="decrement()" type="button">-</button>
+                <input type="text" onchange="updateTotal()" readonly class="bg-white form-control w-50 text-center" name="qty" value="1" id="qty"><br><br>
+                <button id="tambah" class="btn fw-bold btn-dark w-25 text-center" onclick="increment()" type="button">+</button>
+            </div>
             <div class="choosefilediv">
                 <p id="addpict">Add Picture</p>
                 <input type="file" id="myFile" name="image">
@@ -116,5 +123,33 @@ if (isset($_POST["btnSubmit"])) {
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
+<script>
+    function increment() {
+        document.getElementById("qty").value = parseInt(document.getElementById("qty").value) + 1;
+        document.getElementById("kurang").disabled = false;
+        updateTotal();
+    }
+
+    function decrement() {
+        if (parseInt(document.getElementById("qty").value) > 1) {
+            document.getElementById("qty").value -= 1;
+            if (parseInt(document.getElementById("qty").value) <= 1) {
+                document.getElementById("kurang").disabled = true;
+            }
+        }
+        updateTotal();
+    }
+
+    function updateTotal() {
+        let qty = parseInt(document.getElementById("qty").value);
+        let satuan = document.getElementById("satuan").innerText;
+        satuan = satuan.substring(0, satuan.indexOf(","));
+        satuan = parseInt(satuan.replace(/\D/g, ""));
+        let subtotal = qty * satuan;
+        document.getElementById("subtotal").innerText = "Rp " + numberWithCommas(subtotal) + ",00";
+        console.log(subtotal);
+
+    }
+</script>
 
 </html>
