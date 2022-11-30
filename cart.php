@@ -96,7 +96,7 @@ if (mysqli_num_rows($result) > 0) {
 <body class="bg-dark" onload="load_ajax()">
     <nav class="navbar bg-white">
         <div class="container-fluid" style="">
-            <a class="navbar-brand" href="catalogue.php">
+            <a class="navbar-brand" href="welcome.php">
             <img src="logo/cantique.png" width="100vw" height="auto">
             </a>
             <div class="d-flex" role="search">

@@ -36,8 +36,8 @@ $result = mysqli_query($con, "SELECT * FROM h_trans where user_id='$iduser';");
 <body class="bg-dark">
     <nav class="navbar bg-white">
         <div class="container-fluid" style="">
-            <a class="navbar-brand" href="./catalogue.php">
-            <img src="logo/cantique.png" width="100vw" height="auto">
+            <a class="navbar-brand" href="./welcome.php">
+                <img src="logo/cantique.png" width="100vw" height="auto">
             </a>
             <div class="d-flex" role="search">
                 <?php if (isset($_SESSION["username"])) : ?>
