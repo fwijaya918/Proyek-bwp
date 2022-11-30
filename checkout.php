@@ -80,7 +80,7 @@ alert("berhasil apus cart");
     <nav class="navbar bg-white">
         <div class="container" style="">
             <a class="navbar-brand" href="catalogue.php">
-                <img src="logo/Somethinc_Logo.png" width="150">
+            <img src="logo/cantique.png" width="100vw" height="auto">
             </a>
             <div class="d-flex" role="search">
                 <div class="mx-3 mt-2"><a href="cart.php"><img src="logo/shopping_cart_FILL0_wght400_GRAD0_opsz48.png" height="25px" alt=""></a></div>

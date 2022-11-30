@@ -37,7 +37,7 @@ if (isset($_GET["htransid"])) {
     <nav class="navbar bg-white">
         <div class="container-fluid" style="">
             <a class="navbar-brand" href="./catalogue.php">
-                <img src="logo/Somethinc_Logo.png" width="150">
+            <img src="logo/cantique.png" width="100vw" height="auto">
             </a>
             <div class="d-flex" role="search">
                 <?php if (isset($_SESSION["username"])) : ?>

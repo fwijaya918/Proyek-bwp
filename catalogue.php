@@ -97,7 +97,7 @@ $awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
     <nav class="navbar bg-white">
         <div class="container-fluid" style="">
             <a class="navbar-brand" href="welcome.php">
-                <img src="logo/Somethinc_Logo.png" width="150">
+                <img src="logo/cantique.png" width="100vw" height="auto">
             </a>
             <div class="d-flex" role="search">
                 <div class="mx-3 mt-2"><a href="catalogue.php"><img src="logo/menu_book_FILL0_wght400_GRAD0_opsz48.png" height="25px" alt=""></a></div>

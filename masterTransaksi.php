@@ -20,7 +20,7 @@ $result = mysqli_query($con, "SELECT * FROM h_trans;");
     <nav class="navbar bg-white">
         <div class="container" style="">
             <a class="navbar-brand" href="">
-                <img src="logo/Somethinc_Logo.png" width="150">
+            <img src="logo/cantique.png" width="100vw" height="auto">
             </a>
             <div class="d-flex" role="search">
                 <div class="fw-bold mx-5 text-dark login-register"><a href="masterUser.php" class="btn text-decoration-none">Master User</a></div>
