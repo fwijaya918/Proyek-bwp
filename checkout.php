@@ -76,11 +76,11 @@ alert("berhasil apus cart");
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 
-<body>
+<body class="bg-dark">
     <nav class="navbar bg-white">
         <div class="container" style="">
             <a class="navbar-brand" href="catalogue.php">
-            <img src="logo/cantique.png" width="100vw" height="auto">
+                <img src="logo/cantique.png" width="100vw" height="auto">
             </a>
             <div class="d-flex" role="search">
                 <div class="mx-3 mt-2"><a href="cart.php"><img src="logo/shopping_cart_FILL0_wght400_GRAD0_opsz48.png" height="25px" alt=""></a></div>
@@ -94,12 +94,23 @@ alert("berhasil apus cart");
             </div>
         </div>
     </nav>
-    <div class="text-center">
-        <h1>TERIMA KASIH</h1>
-        <h2>NOMOR NOTA HT00<?= $idHtransNow ?></h2>
-        <div class="lead">Contact Us</div>
-        <div class="lead">+6288-885151</div>
+    <div class="bg-dark">
+        <br>
+        <div class="text-center">
+            <img src="logo/clipart2707415.png" alt="" style="width:250px; height:auto;">
+        </div>
+        <br>
+        <br>
+        <div class="text-center" style="color:white;">
+            <h3>YOUR TRANSACTION SUCCESS</h1>
+                <h5>THANK YOU FOR YOUR PATRONAGE
+            </h3>
+            <h5>YOUR RECEIPT NUMBER HT00<?= $idHtransNow ?></h3>
+                <div class=" lead">Contact Us</div>
+                <div class="lead">+6288-885151</div>
+        </div>
     </div>
+
 
 
 
