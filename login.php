@@ -6,6 +6,7 @@ unset($_SESSION["fullname"]);
 if (isset($_REQUEST['btnlogin'])) {
     $inUser = $_REQUEST['inUser'];
     $password = $_REQUEST['inPass'];
+    $password = md5($password);
     $temppass = "";
     $tempfullname = "";
     $tempusername = "";

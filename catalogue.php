@@ -247,7 +247,7 @@ $awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
                     $products = mysqli_query($con, "$base LIMIT $awalData, $jumlahDataPerHalaman;");
                     while ($row = mysqli_fetch_assoc($products)) {
                         echo '<div class="col">';
-                        echo '<a href="detail.php?productid= ' . $row['id'] . '" class="text-decoration-none text-dark">';
+                        echo '<a href="detail.php?productid='  . $row['id'] . '" class="text-decoration-none text-dark">';
                         echo '<div class="card position-relative p-2 mb-2 h-100">';
                         echo '<img src="product/' . urlencode($row["thumbnail"]) . '" class="card-img-top border border-2 border-dark rounded" alt="' . $row["title"] . '">';
                         echo '<div class="card-body text-center">';
@@ -255,7 +255,11 @@ $awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
                         echo $row["title"];
                         echo '</h5>';
                         echo '<p class="mt-4 py-2 text-white rounded bg-primary">';
-                        echo rupiah($row["price"]);
+                        if ($row["stok"] > 0) {
+                            echo rupiah($row["price"]);
+                        } else {
+                            echo "SOLD OUT";
+                        }
                         echo '</p>';
                         echo "</div>";
                         echo "</div>";

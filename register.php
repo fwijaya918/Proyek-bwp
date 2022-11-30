@@ -22,7 +22,7 @@ if (isset($_REQUEST['btnRegis'])) {
             if ($kembar) {
                 $error = "Username already exists!";
             } else {
-                $daftar = mysqli_query($con, "insert into users values('','" . $username . "', '" . $fullname . "','" . $password . "')");
+                $daftar = mysqli_query($con, "insert into users values('','" . $username . "', '" . $fullname . "',MD5('" . $password . "'))");
                 alert("Registrasi berhasil");
             }
         } else {
