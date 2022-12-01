@@ -177,31 +177,14 @@ $awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
         <div class="container-fluid py-2 overflow-auto">
             <h2 class="font-weight-light text-white">New Arrival</h2>
             <div class="d-flex flex-row flex-nowrap">
-                <div class="card card-body">Card</div>
-                <div class="card card-body">Card</div>
-                <div class="card card-body">Card</div>
-                <div class="card card-body">Card</div>
-                <div class="card card-body">Card</div>
-                <div class="card card-body">Card</div>
-                <div class="card card-body">Card</div>
-                <div class="card card-body">Card</div>
-                <div class="card card-body">Card</div>
-                <div class="card card-body">Card</div>
-                <div class="card card-body">Card</div>
-                <div class="card card-body">Card</div>
-                <div class="card card-body">Card</div>
-                <div class="card card-body">Card</div>
-                <div class="card card-body">Card</div>
-                <div class="card card-body">Card</div>
-                <div class="card card-body">Card</div>
-                <div class="card card-body">Card</div>
-                <div class="card card-body">Card</div>
-                <div class="card card-body">Card</div>
-                <div class="card card-body">Card</div>
-                <div class="card card-body">Card</div>
-                <div class="card card-body">Card</div>
-                <div class="card card-body">Card</div>
-                ...
+                <?php
+                $result = mysqli_query($con, "SELECT * FROM product LIMIT 10");
+                while ($newArr = mysqli_fetch_assoc($result)) :
+                ?>
+                    <div class="card card-body">
+                        <img src="product/<?php echo urlencode($newArr["thumbnail"]); ?>" class="card-img-top border border-2 border-dark rounded" alt="" />
+                    </div>
+                <?php endwhile; ?>
             </div>
         </div>
     </div>
@@ -211,7 +194,7 @@ $awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
     <!-- Optional JavaScript; choose one of the two! -->
 
     <!-- Option 1: Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src=" https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
     <!-- Option 2: Separate Popper and Bootstrap JS -->
     <!--
