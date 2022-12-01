@@ -72,7 +72,7 @@ $awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <title>Somethinc</title>
+    <title>Cantique</title>
     <style>
         a {
             /* color: white; */
@@ -83,7 +83,7 @@ $awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
             overflow: hidden;
             text-overflow: ellipsis;
             display: -webkit-box;
-            -webkit-line-clamp: 2;
+            -webkit-line-clamp: 1;
             -webkit-box-orient: vertical;
         }
 
@@ -91,7 +91,7 @@ $awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
             align-items: center;
         }
 
-        .card-body {
+        .card {
             min-height: 300px;
             min-width: 300px;
             margin-right: 5px;
@@ -100,6 +100,16 @@ $awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
         .mh-100 {
             max-width: 100%;
             min-width: 100%;
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            background: grey;
+            border-radius: 10px;
         }
     </style>
 </head>
@@ -174,16 +184,26 @@ $awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
                 <span class="visually-hidden">Next</span>
             </button>
         </div>
+        <h2 class="font-weight-light text-white">New Arrival</h2>
         <div class="container-fluid py-2 overflow-auto">
-            <h2 class="font-weight-light text-white">New Arrival</h2>
             <div class="d-flex flex-row flex-nowrap">
                 <?php
                 $result = mysqli_query($con, "SELECT * FROM product LIMIT 10");
                 while ($newArr = mysqli_fetch_assoc($result)) :
                 ?>
-                    <div class="card card-body">
-                        <img src="product/<?php echo urlencode($newArr["thumbnail"]); ?>" class="card-img-top border border-2 border-dark rounded" alt="" />
-                    </div>
+                    <a href="detail.php?productid=<?= $newArr["id"] ?>">
+                        <div class="bg-white mx-2 pb-2" style="width: 25vw;">
+                            <div class="card-body">
+                                <img src="product/<?php echo urlencode($newArr["thumbnail"]); ?>" class="card-img-top border border-2 border-dark rounded" alt="" />
+                            </div>
+                            <div class="text-center">
+                                <h5 class="card-title ellipsis fixheight mb-3"><?= $newArr["title"] ?></h5>
+                            </div>
+                            <div class="text-center">
+                                <h5 class=""><?= rupiah($newArr["price"]) ?></h5>
+                            </div>
+                        </div>
+                    </a>
                 <?php endwhile; ?>
             </div>
         </div>

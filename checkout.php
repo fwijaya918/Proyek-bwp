@@ -32,7 +32,6 @@ $TOTAL = $rowUang["Total"] + 19000;
 // $ALLQTY = $rowQty["QTY"];
 
 mysqli_query($con, "insert into h_trans values('','" . $iduser . "', '" . $TOTAL . "')");
-alert("berhasil nambah htrans");
 
 $ambilHtransNow = mysqli_query($con, "SELECT MAX(ht_id) AS ht_id FROM `h_trans`");
 $fetchHtransNow = mysqli_fetch_assoc($ambilHtransNow);
@@ -44,9 +43,7 @@ while ($row = mysqli_fetch_assoc($result)) {
 
     mysqli_query($con, "insert into d_trans values('','" . $idHtransNow . "', '" . $row['id_barang'] . "', '" . $row['qty'] . "')");
 }
-alert("berhasil nambah dtrans");
 mysqli_query($con, "DELETE from cart  WHERE id_user='$iduser'");
-alert("berhasil apus cart");
 // if (isset($_REQUEST['btnAdd'])) {
 //     if (!isset($_SESSION["username"])) {
 //         $_SESSION["redirect"] = basename($_SERVER['REQUEST_URI']);
@@ -71,7 +68,7 @@ alert("berhasil apus cart");
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Cantique</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>

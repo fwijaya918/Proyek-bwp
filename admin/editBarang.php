@@ -1,15 +1,8 @@
 <?php
-require("helper.php");
-if (isset($_SESSION["redirect"])) {
-    $redirectlink = $_SESSION["redirect"];
-    unset($_SESSION["redirect"]);
-    header("location:$redirectlink");
-}
-if (isset($_POST["logout"])) {
-    unset($_SESSION["username"]);
-    unset($_SESSION["fullname"]);
-    header("location:catalogue.php");
-}
+require('helper.php');
+$listProduct = mysqli_query($con, "select * from product ");
+
+
 if (!isset($_SESSION['username'])) {
     // header('Location: ./index.php');
 } else {
@@ -25,7 +18,7 @@ if (isset($_GET["category"])) {
 }
 if (isset($_POST["performsearch"])) {
     $pq = $_POST["postquery"];
-    $link = "catalogue.php?query=$pq";
+    $link = "editBarang.php?query=$pq";
     if (isset($_GET["category"])) {
         $idCat = $_GET["category"];
         $link .= "&category=$idCat";
@@ -54,25 +47,18 @@ if (isset($_GET["halaman"])) {
     $halamanAktif = 1;
 }
 $awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
-
-
-
-
-
 ?>
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- Bootstrap CSS -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cantique</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
-    <title>Cantique</title>
     <style>
         a {
             /* color: white; */
@@ -86,53 +72,28 @@ $awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
         }
-
-        .align-center {
-            align-items: center;
-        }
     </style>
 </head>
 
 <body class="bg-dark">
     <nav class="navbar bg-white">
-        <div class="container-fluid" style="">
-            <a class="navbar-brand" href="welcome.php">
-                <img src="logo/cantique.png" width="100vw" height="auto">
+        <div class="container" style="">
+            <a class="navbar-brand" href="admin.php">
+                <img src="../logo/cantique.png" width="150">
             </a>
             <div class="d-flex" role="search">
-                <div class="mx-3 mt-2"><a href="catalogue.php"><img src="logo/menu_book_FILL0_wght400_GRAD0_opsz48.png" height="25px" alt=""></a></div>
-                <?php if (isset($_SESSION["username"])) : ?>
-                    <div class="mx-3 mt-2"><a href="cart.php"><img src="logo/shopping_cart_FILL0_wght400_GRAD0_opsz48.png" height="25px" alt=""></a></div>
-                    <div class="mx-3 mt-2"><a href="history.php"><img src="logo/history.png" height="30px" alt=""></a></div>
-                <?php endif; ?>
-                <?php
-                if (!isset($_SESSION["username"])) :
-                ?>
-                    <div class="fw-bold mx-3 mt-2 text-dark login-register">
-                        <a href="login.php" class="btn p-0 py-0 ps-3 pe-2 d-flex bg-primary text-decoration-none">
-                            <div>Sign In</div>
-                            <img src="logo/login_FILL0_wght400_GRAD0_opsz48.png" height="25px" alt="">
-                        </a>
-                    </div>
-                <?php else : ?>
-                    <form method="POST" action="" class="mx-3 mt-2 d-flex fw-bold h-auto align-center text-dark login-register bg-primary rounded">
-                        <button type="submit" name="logout" class="btn py-0 ps-3 pe-2 d-flex justify-content-between">
-                            <div class="me-2">Sign Out</div>
-                            <div>
-                                <img src="logo/logout_FILL0_wght400_GRAD0_opsz48.png" height="25px" alt="">
-                            </div>
-                        </button>
-                    </form>
-                <?php endif; ?>
-                <!-- <div class="mx-3 mt-2"><a href="index.php"><img src="logo/profileicon.png" height="25px" alt=""></a></div> -->
+                <div class="fw-bold mx-5 text-dark login-register"><a href="masterUser.php" class="btn text-decoration-none">Master User</a></div>
+                <div class="fw-bold mx-5 text-dark login-register"><a href="masterBarang.php" class="btn text-decoration-none">Master Barang</a></div>
+                <div class="fw-bold mx-5 text-dark login-register"><a href="editBarang.php" class="btn text-decoration-none">Edit Barang</a></div>
+                <div class="fw-bold mx-5 text-dark login-register"><a href="masterTransaksi.php" class="btn text-decoration-none">Master Transaksi</a></div>
             </div>
         </div>
     </nav>
     <div class="container-fluid p-5">
-        <form action="" method="post" class="input-group w-50 mb-5">
-            <input type="text" name="postquery" class="w-25 form-control" placeholder="Search:" value="<?php if (isset($_GET["query"])) {
-                                                                                                            echo $_GET["query"];
-                                                                                                        } ?>" id="">
+        <form action="" method="post">
+            <input type="text" name="postquery" class="mb-5" placeholder="Search:" value="<?php if (isset($_GET["query"])) {
+                                                                                                echo $_GET["query"];
+                                                                                            } ?>" id="">
             <button type="submit" class="rounded btn-primary" name="performsearch">Search</button>
         </form>
         <div class="row">
@@ -148,14 +109,14 @@ $awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
                                         if ($_GET["category"] == $row["id_category"]) {
                                             echo "fw-bold";
                                         }
-                                    } ?>" href="catalogue.php?category=<?php echo $row["id_category"] ?><?php if (isset($_GET["query"])) {
-                                                                                                            $tempq = $_GET["query"];
-                                                                                                            echo "&query=$tempq";
-                                                                                                        } ?>"><?= $row["nama_category"] ?></a>
+                                    } ?>" href="editBarang.php?category=<?php echo $row["id_category"] ?><?php if (isset($_GET["query"])) {
+                                                                                                                $tempq = $_GET["query"];
+                                                                                                                echo "&query=$tempq";
+                                                                                                            } ?>"><?= $row["nama_category"] ?></a>
                         <br>
                     <?php endwhile; ?>
                     <br>
-                    <a href="catalogue.php"><button class="btn btn-primary">Reset Filter</button></a>
+                    <a href="editBarang.php"><button class="btn btn-primary">Reset Filter</button></a>
                 </div>
             </div>
             <div class="col-md-10">
@@ -167,10 +128,10 @@ $awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
                             if ($halamanAktif == 1) { ?>
                             <?php
                             } else { ?>
-                                <a class="page-link" href="catalogue.php<?php if (isset($_GET["query"])) {
-                                                                            $tempq = $_GET["query"];
-                                                                            echo "?query=$tempq";
-                                                                        } ?><?php if (isset($_GET["category"])) {
+                                <a class="page-link" href="editBarang.php<?php if (isset($_GET["query"])) {
+                                                                                $tempq = $_GET["query"];
+                                                                                echo "?query=$tempq";
+                                                                            } ?><?php if (isset($_GET["category"])) {
                                                                                 $tempcat = $_GET["category"];
                                                                                 echo "&amp;category=$tempcat";
                                                                             } ?>">
@@ -247,19 +208,15 @@ $awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
                     $products = mysqli_query($con, "$base LIMIT $awalData, $jumlahDataPerHalaman;");
                     while ($row = mysqli_fetch_assoc($products)) {
                         echo '<div class="col">';
-                        echo '<a href="detail.php?productid='  . $row['id'] . '" class="text-decoration-none text-dark">';
+                        echo '<a href="detailEdit.php?productid= ' . $row['id'] . '" class="text-decoration-none text-dark">';
                         echo '<div class="card position-relative p-2 mb-2 h-100">';
-                        echo '<img src="product/' . urlencode($row["thumbnail"]) . '" class="card-img-top border border-2 border-dark rounded" alt="' . $row["title"] . '">';
+                        echo '<img src="../product/' . urlencode($row["thumbnail"]) . '" class="card-img-top border border-2 border-dark rounded" alt="' . $row["title"] . '">';
                         echo '<div class="card-body text-center">';
                         echo '<h5 class="card-title ellipsis fixheight mb-3">';
                         echo $row["title"];
                         echo '</h5>';
                         echo '<p class="mt-4 py-2 text-white rounded bg-primary">';
-                        if ($row["stok"] > 0) {
-                            echo rupiah($row["price"]);
-                        } else {
-                            echo "SOLD OUT";
-                        }
+                        echo rupiah($row["price"]);
                         echo '</p>';
                         echo "</div>";
                         echo "</div>";
@@ -278,10 +235,10 @@ $awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
                             if ($halamanAktif == 1) { ?>
                             <?php
                             } else { ?>
-                                <a class="page-link" href="catalogue.php<?php if (isset($_GET["query"])) {
-                                                                            $tempq = $_GET["query"];
-                                                                            echo "?query=$tempq&amp;performsearch=";
-                                                                        } ?>">
+                                <a class="page-link" href="editBarang.php<?php if (isset($_GET["query"])) {
+                                                                                $tempq = $_GET["query"];
+                                                                                echo "?query=$tempq&amp;performsearch=";
+                                                                            } ?>">
                                     << </a>
                         </li>
                         <li class="page-item">
@@ -337,19 +294,8 @@ $awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
         </div>
 
     </div>
-
-    <!-- Optional JavaScript; choose one of the two! -->
-
-    <!-- Option 1: Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-
-    <!-- Option 2: Separate Popper and Bootstrap JS -->
-    <!--
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
-    -->
     <div class="container-fluid bg-white px-4 py-2 fixed-bottom">&copy; 2022 Cantique. All Rights Reserved</div>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 
 </html>

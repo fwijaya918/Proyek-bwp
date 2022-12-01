@@ -12,7 +12,6 @@ if (!isset($_SESSION['username'])) {
 }
 if (isset($_GET["htransid"])) {
     $ht_id = $_GET["htransid"];
-
     $result = mysqli_query($con, "SELECT * FROM d_trans WHERE dt_ht_id= $ht_id;");
 }
 // $ambilUser = mysqli_query($con, "SELECT * FROM `users` WHERE `username`= '$usernameActive';");
@@ -32,39 +31,16 @@ if (isset($_GET["htransid"])) {
 </head>
 
 <body class="bg-dark">
-
-
     <nav class="navbar bg-white">
-        <div class="container-fluid" style="">
-            <a class="navbar-brand" href="welcome.php">
-                <img src="logo/cantique.png" width="100vw" height="auto">
+        <div class="container" style="">
+            <a class="navbar-brand" href="admin.php">
+                <img src="../logo/cantique.png" width="150">
             </a>
             <div class="d-flex" role="search">
-                <div class="mx-3 mt-2"><a href="catalogue.php"><img src="logo/menu_book_FILL0_wght400_GRAD0_opsz48.png" height="25px" alt=""></a></div>
-                <?php if (isset($_SESSION["username"])) : ?>
-                    <div class="mx-3 mt-2"><a href="cart.php"><img src="logo/shopping_cart_FILL0_wght400_GRAD0_opsz48.png" height="25px" alt=""></a></div>
-                    <div class="mx-3 mt-2"><a href="history.php"><img src="logo/history.png" height="30px" alt=""></a></div>
-                <?php endif; ?>
-                <?php
-                if (!isset($_SESSION["username"])) :
-                ?>
-                    <div class="fw-bold mx-3 mt-2 text-dark login-register">
-                        <a href="login.php" class="btn p-0 py-0 ps-3 pe-2 d-flex bg-primary text-decoration-none">
-                            <div>Sign In</div>
-                            <img src="logo/login_FILL0_wght400_GRAD0_opsz48.png" height="25px" alt="">
-                        </a>
-                    </div>
-                <?php else : ?>
-                    <form method="POST" action="" class="mx-3 mt-2 d-flex fw-bold h-auto align-center text-dark login-register bg-primary rounded">
-                        <button type="submit" name="logout" class="btn py-0 ps-3 pe-2 d-flex justify-content-between">
-                            <div class="me-2">Sign Out</div>
-                            <div>
-                                <img src="logo/logout_FILL0_wght400_GRAD0_opsz48.png" height="25px" alt="">
-                            </div>
-                        </button>
-                    </form>
-                <?php endif; ?>
-                <!-- <div class="mx-3 mt-2"><a href="index.php"><img src="logo/profileicon.png" height="25px" alt=""></a></div> -->
+                <div class="fw-bold mx-5 text-dark login-register"><a href="masterUser.php" class="btn text-decoration-none">Master User</a></div>
+                <div class="fw-bold mx-5 text-dark login-register"><a href="masterBarang.php" class="btn text-decoration-none">Master Barang</a></div>
+                <div class="fw-bold mx-5 text-dark login-register"><a href="editBarang.php" class="btn text-decoration-none">Edit Barang</a></div>
+                <div class="fw-bold mx-5 text-dark login-register"><a href="masterTransaksi.php" class="btn text-decoration-none">Master Transaksi</a></div>
             </div>
         </div>
     </nav>
@@ -78,12 +54,12 @@ if (isset($_GET["htransid"])) {
         $totalPrice = $hargaProduct * $row['product_qty'];
     ?>
         <br>
-        <div class="card mb-3" class="" style="padding-left:10%; padding-right:10%; background-color:#212529; color:white;">
+        <div class="card mb-3 w-75 m-auto" style="background-color:#212529;">
             <div class="row g-0">
                 <div class="col-md-6">
-                    <div class="card-body w-100" style="background-color:green; height:350px;">
+                    <div class="card-body rounded w-100" style="background-color:green; height:350px;">
                         <h5 class="card-title"><?= $fetchProduct["title"] ?></h5>
-                        <p class="card-text fw-bold mt-3"><img src="product/<?= $fotoProduct ?>" alt="" style="width:200px;height:200px;"></p>
+                        <p class="card-text fw-bold mt-3"><img src="../product/<?= $fotoProduct ?>" alt="" style="width:200px;height:200px;"></p>
                         <p class="card-text fw-bold mt-3"><?php echo rupiah($hargaProduct); ?></p>
                     </div>
                 </div>
@@ -97,6 +73,7 @@ if (isset($_GET["htransid"])) {
                 </div>
             </div>
         </div>
+
 
     <?php
     }

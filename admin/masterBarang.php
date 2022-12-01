@@ -61,7 +61,7 @@ if (isset($_POST["btnSubmit"])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Cantique</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="styleMB.css">
@@ -70,20 +70,19 @@ if (isset($_POST["btnSubmit"])) {
 <body class="bg-dark">
     <nav class="navbar bg-white">
         <div class="container" style="">
-            <a class="navbar-brand" href="">
-                <img src="logo/cantique.png" width="100vw" height="auto">
+            <a class="navbar-brand" href="admin.php">
+                <img src="../logo/cantique.png" width="150">
             </a>
             <div class="d-flex" role="search">
                 <div class="fw-bold mx-5 text-dark login-register"><a href="masterUser.php" class="btn text-decoration-none">Master User</a></div>
                 <div class="fw-bold mx-5 text-dark login-register"><a href="masterBarang.php" class="btn text-decoration-none">Master Barang</a></div>
                 <div class="fw-bold mx-5 text-dark login-register"><a href="editBarang.php" class="btn text-decoration-none">Edit Barang</a></div>
                 <div class="fw-bold mx-5 text-dark login-register"><a href="masterTransaksi.php" class="btn text-decoration-none">Master Transaksi</a></div>
-                <div class="mx-3 mt-2"><a href="index.php"><img src="logo/profileicon.png" height="25px" alt=""></a></div>
             </div>
         </div>
     </nav>
-    <div class="formAddPost">
-        <form action="./masterBarang.php" method="post" enctype="multipart/form-data">
+    <div class="bg-white w-75 m-auto my-5 p-5">
+        <form action="./masterBarang.php" method="post" class="container-fluid" enctype="multipart/form-data">
             <h1>Add Product</h1>
             <div class="inputan">
                 <input type="text" name="inTitle" placeholder="Insert product title here" style="background:transparent; border:none; color:black;"><br>
@@ -103,17 +102,17 @@ if (isset($_POST["btnSubmit"])) {
                     ?>
                 </select>
             </div>
-            <h5>Quantity :</h5>
+            <h5>Stock :</h5>
             <div class="input-group mb-4 w-50">
                 <button class="btn fw-bold btn-dark w-25 text-center" id="kurang" onclick="decrement()" type="button">-</button>
-                <input type="text" onchange="updateTotal()" readonly class="bg-white form-control w-50 text-center" name="qty" value="1" id="qty"><br><br>
+                <input type="text" onchange="updateTotal()" readonly class="bg-white form-control w-50 text-center" name="qty" value="1" id="qty">
                 <button id="tambah" class="btn fw-bold btn-dark w-25 text-center" onclick="increment()" type="button">+</button>
             </div>
             <div class="choosefilediv">
                 <p id="addpict">Add Picture</p>
                 <input type="file" id="myFile" name="image">
             </div>
-            <button type="submit" name="btnSubmit" style="margin-left:20px; width:100px; background-color:green;">
+            <button type="submit" name="btnSubmit" class="btn btn-success" style="">
                 Add Product
             </button>
         </form>
