@@ -97,17 +97,34 @@ if (mysqli_num_rows($result) > 0) {
     <nav class="navbar bg-white">
         <div class="container-fluid" style="">
             <a class="navbar-brand" href="welcome.php">
-            <img src="logo/cantique.png" width="100vw" height="auto">
+                <img src="logo/cantique.png" width="100vw" height="auto">
             </a>
             <div class="d-flex" role="search">
-                <div class="mx-3 mt-2"><a href="cart.php"><img src="logo/shopping_cart_FILL0_wght400_GRAD0_opsz48.png" height="25px" alt=""></a></div>
+                <div class="mx-3 mt-2"><a href="catalogue.php"><img src="logo/menu_book_FILL0_wght400_GRAD0_opsz48.png" height="25px" alt=""></a></div>
+                <?php if (isset($_SESSION["username"])) : ?>
+                    <div class="mx-3 mt-2"><a href="cart.php"><img src="logo/shopping_cart_FILL0_wght400_GRAD0_opsz48.png" height="25px" alt=""></a></div>
+                    <div class="mx-3 mt-2"><a href="history.php"><img src="logo/history.png" height="30px" alt=""></a></div>
+                <?php endif; ?>
                 <?php
                 if (!isset($_SESSION["username"])) :
                 ?>
-                    <div class="fw-bold mx-5 text-dark login-register"><a href="login.php" class="btn text-decoration-none">Login</a></div>
+                    <div class="fw-bold mx-3 mt-2 text-dark login-register">
+                        <a href="login.php" class="btn p-0 py-0 ps-3 pe-2 d-flex bg-primary text-decoration-none">
+                            <div>Sign In</div>
+                            <img src="logo/login_FILL0_wght400_GRAD0_opsz48.png" height="25px" alt="">
+                        </a>
+                    </div>
                 <?php else : ?>
-                    <form method="POST" action="" class="fw-bold mx-5 text-dark login-register"><button class="btn" type="submit" name="logout" class="btnnav">Logout</button></form>
+                    <form method="POST" action="" class="mx-3 mt-2 d-flex fw-bold h-auto align-center text-dark login-register bg-primary rounded">
+                        <button type="submit" name="logout" class="btn py-0 ps-3 pe-2 d-flex justify-content-between">
+                            <div class="me-2">Sign Out</div>
+                            <div>
+                                <img src="logo/logout_FILL0_wght400_GRAD0_opsz48.png" height="25px" alt="">
+                            </div>
+                        </button>
+                    </form>
                 <?php endif; ?>
+                <!-- <div class="mx-3 mt-2"><a href="index.php"><img src="logo/profileicon.png" height="25px" alt=""></a></div> -->
             </div>
         </div>
     </nav>
@@ -136,6 +153,7 @@ if (mysqli_num_rows($result) > 0) {
             <?php endif;  ?>
             </div>
     </div>
+    <div class="container-fluid bg-white px-4 py-2 fixed-bottom">&copy; 2022 Cantique. All Rights Reserved</div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>

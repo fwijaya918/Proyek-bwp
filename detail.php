@@ -78,7 +78,7 @@ if (isset($_REQUEST['btnAdd'])) {
     <nav class="navbar bg-white">
         <div class="container-fluid" style="">
             <a class="navbar-brand" href="welcome.php">
-            <img src="logo/cantique.png" width="100vw" height="auto">
+                <img src="logo/cantique.png" width="100vw" height="auto">
             </a>
             <div class="d-flex" role="search">
                 <div class="mx-3 mt-2"><a href="catalogue.php"><img src="logo/menu_book_FILL0_wght400_GRAD0_opsz48.png" height="25px" alt=""></a></div>
@@ -105,7 +105,7 @@ if (isset($_REQUEST['btnAdd'])) {
                         </button>
                     </form>
                 <?php endif; ?>
-                <div class="mx-3 mt-2"><a href="index.php"><img src="logo/profileicon.png" height="25px" alt=""></a></div>
+                <!-- <div class="mx-3 mt-2"><a href="index.php"><img src="logo/profileicon.png" height="25px" alt=""></a></div> -->
             </div>
         </div>
     </nav>
@@ -164,12 +164,7 @@ if (isset($_REQUEST['btnAdd'])) {
         </div>
 
     </div>
-
-
-
-
-
-
+    <div class="container-fluid bg-white px-4 py-2 fixed-bottom">&copy; 2022 Cantique. All Rights Reserved</div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>

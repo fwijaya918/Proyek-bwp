@@ -90,6 +90,17 @@ $awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
         .align-center {
             align-items: center;
         }
+
+        .card-body {
+            min-height: 300px;
+            min-width: 300px;
+            margin-right: 5px;
+        }
+
+        .mh-100 {
+            max-width: 100%;
+            min-width: 100%;
+        }
     </style>
 </head>
 
@@ -97,7 +108,7 @@ $awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
     <nav class="navbar bg-white">
         <div class="container-fluid" style="">
             <a class="navbar-brand" href="welcome.php">
-                <img src="logo/Somethinc_Logo.png" width="150">
+                <img src="logo/cantique.png" width="100vw" height="auto">
             </a>
             <div class="d-flex" role="search">
                 <div class="mx-3 mt-2"><a href="catalogue.php"><img src="logo/menu_book_FILL0_wght400_GRAD0_opsz48.png" height="25px" alt=""></a></div>
@@ -124,7 +135,7 @@ $awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
                         </button>
                     </form>
                 <?php endif; ?>
-                <div class="mx-3 mt-2"><a href="index.php"><img src="logo/profileicon.png" height="25px" alt=""></a></div>
+                <!-- <div class="mx-3 mt-2"><a href="index.php"><img src="logo/profileicon.png" height="25px" alt=""></a></div> -->
             </div>
         </div>
     </nav>
@@ -163,7 +174,36 @@ $awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
                 <span class="visually-hidden">Next</span>
             </button>
         </div>
-
+        <div class="container-fluid py-2 overflow-auto">
+            <h2 class="font-weight-light text-white">New Arrival</h2>
+            <div class="d-flex flex-row flex-nowrap">
+                <div class="card card-body">Card</div>
+                <div class="card card-body">Card</div>
+                <div class="card card-body">Card</div>
+                <div class="card card-body">Card</div>
+                <div class="card card-body">Card</div>
+                <div class="card card-body">Card</div>
+                <div class="card card-body">Card</div>
+                <div class="card card-body">Card</div>
+                <div class="card card-body">Card</div>
+                <div class="card card-body">Card</div>
+                <div class="card card-body">Card</div>
+                <div class="card card-body">Card</div>
+                <div class="card card-body">Card</div>
+                <div class="card card-body">Card</div>
+                <div class="card card-body">Card</div>
+                <div class="card card-body">Card</div>
+                <div class="card card-body">Card</div>
+                <div class="card card-body">Card</div>
+                <div class="card card-body">Card</div>
+                <div class="card card-body">Card</div>
+                <div class="card card-body">Card</div>
+                <div class="card card-body">Card</div>
+                <div class="card card-body">Card</div>
+                <div class="card card-body">Card</div>
+                ...
+            </div>
+        </div>
     </div>
 
     </div>
@@ -178,6 +218,7 @@ $awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
     -->
+    <div class="container-fluid bg-white px-4 py-2 fixed-bottom">&copy; 2022 Cantique. All Rights Reserved</div>
 </body>
 
 </html>

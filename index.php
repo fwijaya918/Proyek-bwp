@@ -1,19 +1,16 @@
 <?php
 require('helper.php');
+header("location:welcome.php");
 unset($_SESSION["username"]);
 unset($_SESSION["fullname"]);
 
 if (isset($_REQUEST['btnUser'])) {
-    header("location:catalogue.php");
 } else if (isset($_REQUEST['btnAdmin'])) {
     header("location:admin.php");
 }
-
-
-
 ?>
 
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -31,4 +28,4 @@ if (isset($_REQUEST['btnUser'])) {
     </form>
 </body>
 
-</html>
+</html> -->

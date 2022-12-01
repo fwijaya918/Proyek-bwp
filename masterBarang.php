@@ -71,7 +71,7 @@ if (isset($_POST["btnSubmit"])) {
     <nav class="navbar bg-white">
         <div class="container" style="">
             <a class="navbar-brand" href="">
-            <img src="logo/cantique.png" width="100vw" height="auto">
+                <img src="logo/cantique.png" width="100vw" height="auto">
             </a>
             <div class="d-flex" role="search">
                 <div class="fw-bold mx-5 text-dark login-register"><a href="masterUser.php" class="btn text-decoration-none">Master User</a></div>
@@ -118,9 +118,7 @@ if (isset($_POST["btnSubmit"])) {
             </button>
         </form>
     </div>
-
-
-
+    <div class="container-fluid bg-white px-4 py-2 fixed-bottom">&copy; 2022 Cantique. All Rights Reserved</div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 <script>
