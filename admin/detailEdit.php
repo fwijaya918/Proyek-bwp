@@ -35,7 +35,29 @@ if (isset($_REQUEST['btnEdit'])) {
     if ($namabaru == "" || $hargabaru == "" || $deskripsibaru == "") {
         alert("ada yang kosong datanya");
     } else {
-        mysqli_query($con, "UPDATE product SET title='$namabaru', price='$hargabaru', description='$deskripsibaru', stok = '$qty' where id='$productID'");
+        $errors = array();
+        $file_name = $_FILES['image']['name'];
+        $file_size = $_FILES['image']['size'];
+        $file_tmp = $_FILES['image']['tmp_name'];
+        $file_type = $_FILES['image']['type'];
+
+        if ($file_size > 2097152) {
+            $errors[] = 'File size melebihi batas';
+        }
+
+        if (empty($errors) == true && $file_name != "") {
+            move_uploaded_file($file_tmp, "product/" . $file_name);
+        } else {
+            alert("Ukuran file melebihi batas");
+        }
+
+        // $result = mysqli_query($con, "insert INTO product (id , title, price, description, thumbnail, product_category_id, stok) VALUES ('','" . $title . "' , '" . $price . "' , '" . $desc . "' ,'" . $_FILES['image']['name'] . "' ,'" . $category . "', '" . $qty . "')");
+        // if ($result) {
+        //     alert("berhasil upload");
+        // } else {
+        //     alert("gagal upload");
+        // }
+        mysqli_query($con, "UPDATE product SET title='$namabaru', price='$hargabaru', description='$deskripsibaru', stok = '$qty', thumbnail='$file_name' where id='$productID'");
         alert("berhasil update barang");
         header('Location: ./editBarang.php');
     }
@@ -108,28 +130,33 @@ if (isset($_REQUEST['btnEdit'])) {
                             <h6 class="">Description</h6>
                             <p><?= $tempDesc ?></p>
                         </div>
+
                         <div class="">
                             <h6 class="">Shipping</h6>
-                            <p>Ongkir Reguler 19 rb</p>
+                            <p>Regular Delivery 19 rb</p>
                             <?php
                             $DateStart = date_create("now", new DateTimeZone('Asia/Jakarta'));
                             $DateEnd = date_create("now", new DateTimeZone('Asia/Jakarta'));
                             date_add($DateStart, date_interval_create_from_date_string("3 days"));
                             date_add($DateEnd, date_interval_create_from_date_string("5 days"));
                             ?>
-                            <p class="text-muted">Estimasi Tiba <?= date_format($DateStart, "d M"); ?> - <?= date_format($DateEnd, "d M"); ?> </p>
+                            <p class="text-muted">Estimated Arrival <?= date_format($DateStart, "d M"); ?> - <?= date_format($DateEnd, "d M"); ?> </p>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-3 bg-danger">
-                <form action="" method="post">
+                <form action="" method="post" enctype="multipart/form-data">
                     <h5>Nama Baru :</h5>
                     <input type="text" name="nama" id=""> <br><br>
                     <h5>Harga Baru :</h5>
                     <b>Rp </b> <input type="number" name="harga" id=""><br><br>
                     <h5>Deskripsi Baru :</h5>
                     <textarea name="deskripsi" id="" cols="40" rows="10" placeholder="deskripsi baru"></textarea><br>
+                    <div class="choosefilediv">
+                        <h5 id="addpict">Add Picture</h5>
+                        <input type="file" id="myFile" name="image">
+                    </div>
                     <h5>Quantity :</h5>
                     <div class="input-group mb-4 w-50">
                         <button class="btn fw-bold btn-dark w-25 text-center" id="kurang" onclick="decrement()" type="button">-</button>

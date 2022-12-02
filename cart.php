@@ -50,7 +50,7 @@ function updateSubtotal($con, $usernameActive)
     $rowQty = mysqli_fetch_assoc($resultQty);
     $rowUang = mysqli_fetch_assoc($resultUang);
     $TOTAL = $rowUang["Total"];
-    $subtotal = $rowUang["Total"];
+    $subtotal = $rowUang["Total"] + 19000;
 
     // Required
     $transaction_details = array(

@@ -15,7 +15,7 @@ $ambilUser = mysqli_query($con, "SELECT * FROM `users` WHERE `username`= '$usern
 $fetchUser = mysqli_fetch_assoc($ambilUser);
 $iduser = $fetchUser['id'];
 
-$result = mysqli_query($con, "SELECT * FROM h_trans where user_id='$iduser';");
+$result = mysqli_query($con, "SELECT * FROM h_trans where user_id='$iduser' ORDER BY ht_id desc;");
 
 ?>
 
@@ -85,7 +85,18 @@ $result = mysqli_query($con, "SELECT * FROM h_trans where user_id='$iduser';");
                 <div class="col-md-6">
                     <div class="card-body w-100" style="background-color:green;">
                         <h5 class="card-title">Detail Transaction</h5>
-                        <h5>Status : Done</h5>
+                        <?php
+                        if ($row["Stat"] == 1) { ?>
+                            <h5>Paid</h5>
+                        <?php
+                        } else if ($row["Stat"] == 2) { ?>
+                            <h5>Delivered</h5>
+                        <?php
+                        } else if ($row["Stat"] == 3) { ?>
+                            <h5>Finished</h5>
+                        <?php
+                        }
+                        ?>
                         <div class="fw-bold mx-3 text-dark login-register"><a href="dtrans.php?htransid=<?= $row['ht_id'] ?>" class="btn text-decoration-none">See Detail</a></div>
                     </div>
                 </div>

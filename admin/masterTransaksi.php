@@ -1,7 +1,16 @@
 <?php
 require('helper.php');
 
-$result = mysqli_query($con, "SELECT * FROM h_trans;");
+$result = mysqli_query($con, "SELECT * FROM h_trans ORDER BY ht_id desc;");
+
+if (isset($_REQUEST['btnUpdate'])) {
+    $tempID = $_REQUEST['idUpdate'];
+    // if(){
+
+    // }
+    mysqli_query($con, "UPDATE h_trans SET Stat=Stat+1 where ht_id='$tempID'");
+    header('Location: ./masterTransaksi.php');
+}
 ?>
 
 <!DOCTYPE html>
@@ -51,7 +60,29 @@ $result = mysqli_query($con, "SELECT * FROM h_trans;");
                 <div class="col-md-6">
                     <div class="card-body w-100" style="background-color:green;height:150px;">
                         <h5 class="card-title">Detail Transaction</h5>
-                        <h5>Status : Done</h5>
+                        <?php
+                        if ($row["Stat"] == 1) { ?>
+                            <h5>Paid</h5>
+                        <?php
+                        } else if ($row["Stat"] == 2) { ?>
+                            <h5>Delivered</h5>
+                        <?php
+                        } else if ($row["Stat"] == 3) { ?>
+                            <h5>Finished</h5>
+                        <?php
+                        }
+                        ?>
+
+                        <?php
+                        if ($row["Stat"] < 3) { ?>
+                            <form action="" method="POST">
+                                <input type="hidden" name="idUpdate" value="<?= $row['ht_id'] ?>">
+                                <button name="btnUpdate" class="mx-3 text-dark login-register" style="background-color:yellow; width:fit-content; padding:5px; border-radius:10px;">UPDATE STATUS</button>
+                            </form>
+                        <?php
+                        }
+                        ?>
+
                         <div class="fw-bold mx-3 text-dark login-register"><a href="dtrans.php?htransid=<?= $row['ht_id'] ?>" class="btn text-decoration-none">See Detail</a></div>
                     </div>
                 </div>

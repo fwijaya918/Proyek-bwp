@@ -31,7 +31,7 @@ $TOTAL = $rowUang["Total"] + 19000;
 // var_dump($snapToken);
 // $ALLQTY = $rowQty["QTY"];
 
-mysqli_query($con, "insert into h_trans values('','" . $iduser . "', '" . $TOTAL . "')");
+mysqli_query($con, "insert into h_trans values('','" . $iduser . "', '" . $TOTAL . "', 1)");
 
 $ambilHtransNow = mysqli_query($con, "SELECT MAX(ht_id) AS ht_id FROM `h_trans`");
 $fetchHtransNow = mysqli_fetch_assoc($ambilHtransNow);

@@ -15,7 +15,7 @@ if (isset($_POST["btnSubmit"])) {
 
     // $username = $usernameActive;
     // $fullname = $fullnameActive;
-    if ($title == "" || $desc == "" || $price) {
+    if ($title == "" || $desc == "" || $price == "") {
         alert("ada yang kosong");
     } else {
         if (!empty($_FILES["image"]["name"])) {
